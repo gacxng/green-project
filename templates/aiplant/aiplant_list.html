@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+<head>
+   <title>내 식물 추천 결과 리스트</title>
+</head>
+<div layout:fragment="content" class="content-container bg-yellow">
+	<div class="content-inner site-width layout-pd-L">
+		<div class="title-container site-width bg-white flex-between-container">
+             <h1 class="h2">AI 추천 식물<span class="txt-red"></span></h1>
+             <div class="breadscrumb-container">
+            	<a th:href="@{/aiplant/aiplant.do}" class="link no-icon font-size-14 txt-gray">식물 추천받기</a>
+            	<span class="ic-arrow"></span>
+            	<a th:href="@{/aiplant/aiplant_list.do}" class="link no-icon font-size-14 txt-bold">추천 식물 리스트</a>
+            </div>
+		</div>
+		<section th:if="${list != null}" class="aiplant-list-container">
+            <div th:each="dto : ${list}" class="card full-card pos-relative">
+                 <div class="aiplant-info flex-between-container flex-valign-start">
+                     <div class="img-container">
+                        <img th:src="@{${dto.plant_img}}"/>
+                     </div>
+                     <div class="show-more" onclick="showMore(this)">펼쳐보기</div>
+                     <div class="aiplant-txt-container w-half">
+                         <div class="mb-10">
+                             <h2 class="h3" th:text="${dto.plant_name}">애칭</h2>
+                             <p class="font-size-12 txt-gray" th:text="${dto.scientific_name}">식물 영문명(학명)</p>
+                         </div>
+                         <div class="separator mb-6"></div>
+                     </div>
+                 </div>
+                 <div class="general-info">
+                     <div class="w-100">
+                         <h2 class="font-size-18 txt-bold mb-10">식물 정보</h2>
+                     </div>
+                     <div class="general-info-content aiplant-info">
+                      <div class="flex-between-container">
+                      	<div class="w-half">
+                      		<div class="plant-info flex-container">
+                               <p class="info-title">수명</p>
+                               <p class="info-content" th:text="${dto.age} + '년 전후'">다년생</p>
+                           </div>
+                           <div class="plant-info flex-container mb-6">
+                               <p class="info-title">물주기</p>
+                               <p class="info-content" th:text="${dto.watering}">꽃말꽃말꽃말</p>
+                           </div>
+                      	</div>
+                      	<div class="w-half">
+                      		<div class="plant-info flex-container">
+                               <p class="info-title">평균 성장</p>
+                               <p class="info-content" th:text="'최대 ' + ${dto.height}">식물 높이</p>
+                           </div>
+                           <div class="plant-info flex-container">
+                               <p class="info-title">적정 온도</p>
+                               <p class="info-content" th:text="${dto.temperature} + '℃'">20C</p>
+                           </div>
+                      	</div>
+                      </div>
+                     </div>
+                     <div class="separator mb-20"></div>
+                     <div class="general-info-content mb-20">
+                     	<p class="info-title txt-bold txt-gray">특징</p>
+                         <p th:text="${dto.feature}"></p>
+                     </div>
+                     <div class="separator"></div>
+                     <div class="btn-container txt-right">
+                         <a class="btn btn-submit" type="button" value="삭제하기" th:onclick="sendPlant2([[${dto.plant_no}]], [[${dto.user_id}]])">삭제하기</a>
+                     </div>
+                 </div>
+            </div>
+          </section>
+          <div class="msg-container txt-center" th:if="${list == null || #lists.isEmpty(list)}">
+				<a th:href="@{/aiplant/aiplant.do}" class="font-size-16 txt-green">식물 추천 받으러 가기 &#128526;</a>
+          </div>
+     </div>
+</div>
+</html>

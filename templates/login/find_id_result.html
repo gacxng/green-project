@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container">
+	<section class="layout-pd-L max-w-400 txt-center">
+	    <div class="title-container">
+	    	<h1 class="h1">아이디찾기</h1>
+	    </div>
+	       <div id="result">
+	           <p th:if="${userId != null}">회원님의 정보와 일치하는 아이디는 다음과 같습니다 : <span th:text="${userId}"></span></p>
+	           <p th:if="${userId == null}" class="layout-pb-S">회원님의 정보와 일치하는 아이디가 없습니다.</p>
+	       </div>
+	       <div class="txt-center">
+               <input class="btn_insert txt-green" type="button" value="로그인하기" th:onclick="|location.href='@{/login/login.do}'|">
+               <span class="bar"></span>
+               <input class="btn_insert" type="button" value="아이디찾기" th:onclick="|location.href='@{/login/find_id.do}'|">
+               <span class="bar"></span>
+               <input class="btn_insert" type="button" value="비밀번호찾기" th:onclick="|location.href='@{/login/find_pw.do}'|">
+           </div>
+	</section>
+</div>
+</html>

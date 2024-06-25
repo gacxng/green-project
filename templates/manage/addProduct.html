@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>관리자 | 상품 관리</title>
+	</head>
+	<div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title">상품 추가</h1>
+	        </div>
+	        <div>
+	        	<a th:href="@{/manage/product.do}">상품 관리</a>-<a th:href="@{/manage/addProduct.do}">상품 추가하기</a>
+	        </div>
+	        <h2 class="font-size-18 txt-bold mb-20">상품 추가하기</h2>
+	        <div class="side-content">
+	        	<div class="table-aside-container">
+	        	
+	        	
+	        	
+                         	<form id="form_input_product" name="form_input_product" action="/inputProduct.do" method="post" enctype="multipart/form-data" class="form-type-2">
+	                        	<div class="flex-between-container">
+		                            <div class="txt-container form-container">
+	                                	<div class="input-container">
+	                                		<label>
+					                            <span class="label-txt mb-6">상품 이름</span>
+					                            <input name="product_name" type="text" placeholder="예) 장미">
+					                        </label>
+					                    </div>
+	                                    <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">판매처 링크 주소</span>
+					                            <input name="url" type="text" placeholder="http:// 또는 https://로 시작">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">카테고리 번호</span>
+					                            <input name="category_no" type="text" placeholder="1~10">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">판매처</span>
+					                            <input name="manufacture" type="text" placeholder="예) **가든">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">상품 이미지 주소</span>
+					                            <input name="img_path" type="text" placeholder="http:// 또는 https://로 시작">
+					                        </label>
+					                     </div>
+	                                     <div class="btn-container txt-right">
+	                                        <button class="btn btn-submit" type="button" onclick="confirmProduct();">추가하기</button>
+	                                     </div>
+		                             </div>
+		                    	 </div>
+                            </form>
+        <!-- <td class="content1">
+				<select name="oiltype">	
+				<option value="" selected class="sel">유종선택</option>
+ 				<%
+				for(int i=0; i < list.size(); i++) {
+					OilDTO dto = (OilDTO)list.get(i);
+				%>
+				<option value="<%=dto.getOiltype() %>">[<%=dto.getOiltype() %>] <%=dto.getOilname() %></option>
+				<%
+				}
+				%>
+			</td> -->
+                            
+                            
+	            </div>
+             </div>
+		</div>
+	</div>
+</html>

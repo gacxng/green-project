@@ -1,0 +1,159 @@
+@charset "UTF-8";
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License:none (public domain)
+*/
+:root {
+	--black:#181818; --dark-gray:#333; --gray:#808080; --mid-gray:#D2D2D2; --mid-gray-2:#EEE; --light-gray:#EEE; --bg-gray:#F1F3F4; --white:#FFF;
+   --site-width:1040px; --max-w-880:880px; --max-w-740:740px; --max-w-640:640px; --max-w-460:460px;
+   --full:100%; --half:50%; --quarter:25%; --fifth:20%; --auto:0 auto;
+   --primary-green:#00B955; --secondary-green:#A6CDB7; --pale-green:#E5EFEB; --pale-green-clear:rgba(0,185,85, 0.15); --error-red:#FF3030;
+   --border-r-20:20px; --border-r-10:10px; --border-r-6:6px; --input-border-r:3px;
+   --card-shadow:0 0 10px 0 rgba(0,0,0,0.15);
+   --container-min-h:400px;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {margin:0; padding:0; border:0; font-size:100%; font:inherit; vertical-align:baseline;}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {display:block;}
+body {line-height:1;}
+ol, ul {list-style:none;}
+blockquote, q {quotes:none;}
+blockquote:before, blockquote:after,
+q:before, q:after {content:''; content:none;}
+table {border-collapse:collapse; border-spacing:0;}
+body {font-size:16px; font-family:'Noto Sans KR', '돋움', sans-serif; font-optical-sizing:auto; font-weight:normal; line-height:1.6;}
+a {text-decoration:none; color:var(--black);}
+ul, ol, li {list-style:none;}
+p {margin-bottom:6px; line-height:1.6;}
+/* form {width:var(--full);} */
+
+/* Inout & Button Resets */
+input[type='text'],
+input[type='password'],
+input[type='reset'],
+input[type='button'],
+input[type='date'],
+input[type='submit'],
+input[type='number'],
+input[type='tag'],
+button, textarea {
+   -webkit-appearance:none;
+   -moz-appearance:none;
+   appearance:none;
+   border:0;
+   vertical-align:middle;
+   border-radius:var(--input-border-r);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='date'],
+input[type='number'],
+input[type='tag'] {
+   height:31px;
+   padding:4px 6px;
+   min-width:80px;
+   outline:1px solid var(--mid-gray);
+   text-align:left;
+   font-family:'Noto Sans KR', '돋움', sans-serif;
+   -webkit-box-sizing:border-box;
+   box-sizing:border-box;
+   border:0;
+}
+textarea {
+   padding:6px;
+   min-height:80px;
+   max-height:120px;
+   overflow-y:auto;
+   line-height:1.6;
+   font-family:'Noto Sans KR', '돋움', sans-serif;
+   outline:1px solid var(--mid-gray);
+   white-space:pre-wrap;
+   text-align:left!important;
+}
+select {
+	width:var(--full);
+	padding:6px;
+	background-color:var(--white);
+	font-size:12px;
+	border-radius:var(--input-border-r);
+	border-color:var(--mid-gray);
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	appearance:none;
+	min-width:90px;
+	height:var(--full);
+}
+input[type="button"], button {
+   cursor:pointer;
+   background:transparent;
+}
+
+/* Scrollbar Custom */
+::-webkit-scrollbar {
+   width:14px; 
+   height:14px;
+}
+::-webkit-scrollbar-track {
+   background-color:var(--light-gray);
+}
+::-webkit-scrollbar-track-piece {
+   background-color:var(--light-gray);
+}
+::-webkit-scrollbar-thumb {
+   background-color:var(--mid-gray);
+}
+::-webkit-scrollbar-button {
+   background-color:transparent;
+   width:0;
+   height:0;
+}
+::-webkit-scrollbar-button:start {
+   margin-top:0;
+   background-color:transparent;
+}
+::-webkit-scrollbar-button:end {
+   margin-bottom:0;
+   background-color:transparent;
+}
+::-webkit-scrollbar-button:vertical:increment {
+   appearance:none;
+}
+::-webkit-scrollbar-button:vertical:decrement {
+   appearance:none;
+}
+::-webkit-scrollbar-corner {
+   background-color: var(--light-gray);
+}
+::-webkit-resizer {
+   background-color:var(--light-gray);
+}
+
+/* === Media Queries === */
+@media screen and (max-width: 640px) {
+   body {
+      font-size:14px;
+   }
+ }

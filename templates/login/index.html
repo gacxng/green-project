@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container">
+    <section class="site-width layout-pd-L txt-center">
+        <h1 class="h1">내 짝꿍 식물은 무엇일까...?</h1>
+        <p class="text">우리 서비스는요...?</p>
+        <p class="text">내 씨앗 키우기</p>
+        <p class="text">내 짝꿍 식물을 추천받을 수 있어요</p>
+        <p class="text">샵 있고</p>
+        <br>
+        <br>
+        <div class="bgn-contaier">
+            <button type="button" class="btn btn_regist" th:onclick="@{|window.location='@{/login/regist.do}'|}">회원가입</button>
+            <button type="button" class="btn btn_login" th:onclick="@{|window.location='@{/login/login.do}'|}">로그인</button>
+        </div>
+    </section>
+</div>
+</html>

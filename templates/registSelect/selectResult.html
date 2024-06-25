@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container">
+    <section class="character-result-section site-width layout-pd-L">
+        <div th:each="dto:${charDto}" class="txt-center font-size-18">
+            <div class="title-container">
+            	<h1 class="h1">
+	            	<span th:text="${dto.character_name}"></span>
+            	</h1>
+            	<div class="layout-pb-M">
+	            	<img th:src="@{'/img/game_character/' + ${dto.char_img}}" alt="Character Image" class="char-img">
+	            </div>
+            	<p>안녕~!	</p>
+            	<p>나는 
+            		<span th:text="${dto.join_keyword}" class="txt-green"></span>
+            		<span th:text="${dto.character_name}"></span>야.
+            	</p>
+            </div>
+            <p class="layout-pb-S">앞으로 나는 어떤 모습으로 자라게 될까? 계속 지켜봐줘~!</p>
+           	<div class="char-nickname-form-contaiiner max-w-460 pos-relative">
+	        	<form name="form_charNickname" action="/login/putCharacterNickname.do" method="POST">
+	        		 <input type="hidden" name="user_id" th:value="${user_id}">
+	        		 <input type="hidden" name="character_no" th:value="${dto.character_no}">
+	        		 <input name="character_nickname" type="text" placeholder="캐릭터 이름을 입력하세요. (한/영 8글자 이내)" class="char-nickname">
+	        		 <button type="button" onclick="saveCharacterNickName(this);" class="btn btn-submit">저장</button>
+	        	</form>
+	        </div>
+	        <div th:if="${userCharacterNick}" class="result-msg-container layout-pd-L">
+	        	<button sec:authorize="isAnonymous()" type="button" class="btn-character btn_gotoLogin font-size-18" th:onclick="|location.href='@{/login/login.do}'|">
+	        		로그인하고 <span th:text="${userCharacterNick}" class="txt-green"></span>키워보기
+	        	</button>
+		        <button sec:authorize="isAuthenticated()" type="button" class="btn-character btn_gotoMain font-size-18 txt-green" th:onclick="|location.href='@{/main}'|">메인으로 바로가기</button>
+		    </div>
+        </div>
+    </section>
+</div>
+</html>

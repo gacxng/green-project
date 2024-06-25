@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+    <div layout:fragment="content" class="content-container">
+        <section class="content-inner myplant-upload-wrapper layout-pd-L">
+            <div class="title-container">
+                <h1 class="h2 site-width txt-white mb-20">내 식물 등록</h1>
+            </div>
+            <div class="img-upload-container site-width">
+	            <form id="form_input_myplant" name="form_input_myplant" action="/inputMyPlant.do" method="post" enctype="multipart/form-data" class="form-type-2 w-100">
+	                <div class="form-inner">
+		                <div class="upload-container">
+		                	<div class="img-container">
+		                		<img class="preview" src="/img/no-img.png" alt="업로드 이미지" />
+		                	</div>
+							<label class="btn upload-img">
+								<input type="file" accept="/img/myplant/*" name="myplant_img" onchange="readURL(this);" multiple>
+								<i class="material-icons">&#xe412;</i>
+								<span>파일 선택</span>
+							</label>
+		                </div>
+		          		<div class="txt-container">
+		          			<!-- <input type="hidden" th:name="user_id" th:value="${#authentication.principal.username}" /> -->
+			                 <div class="input-container">
+				                 <label>
+		                            <span class="label-txt">식물종</span>
+		                            <input name="plant_name" type="text" placeholder="#산세베리아, #다육이">
+		                        </label>
+		                     </div>
+			                 <div class="input-container">
+				                 <label>
+		                            <span class="label-txt">애칭</span>
+		                            <input name="plant_nickname" type="text">
+		                        </label>
+		                     </div>
+			                 <div class="input-container">
+				                 <label>
+		                            <span class="label-txt">처음 만난 날(등록일)</span>
+		                             <input id="myplant_first_date" name="first_date" type="date">
+		                        </label>
+		                     </div>
+			                 <div class="input-container">
+				                 <label>
+		                            <span class="label-txt">마지막으로 물준 날</span>
+		                            <input id="myplant_lastwater_date" name="last_water" type="date">
+		                        </label>
+		                     </div>
+			                 <div class="input-container">
+			                 	<label>
+		                            <span class="label-txt mb-10">내 식물은요...</span>
+				                	<textarea name="user_memo" placeholder="내 식물에 대해 알려주세요."></textarea>
+		                        </label>
+			                 	</div>
+			                 <div class="btn-container txt-right">
+			                     <button class="btn btn-reset" type="button">초기화</button>
+			                     <button class="btn btn-submit" type="button" onclick="confirmMyplant();">내 식물 등록</button>
+			                 </div>
+		                </div>
+		        	</div>
+	            </form>
+            </div>
+        </section>
+        <section class="myplant-list-container layout-pd-L">
+            <div class="site-width mb-20">
+                <div class="title-container flex-between-container">
+                    <h2 class="h3">내 식물 리스트<span th:text="${tot_myplant}" class="myplant-cnt txt-green font-size-14 txt-normal pl-6"></span></h2>
+                    <a th:href="@{/myplant/myplant_list}" class="link-read-more font-size-14">내 식물 더보기</a>
+                </div>
+                <div th:if="${!myplantList.isEmpty()}" id="myplant_json">
+                	<div class="page-list-container">
+						<div class="page">
+					        <div th:each="dto : ${ myplantList }" 
+					        	class="card type-2 myplant-card" 
+					        	th:onclick="scrollToMyplant([[ ${dto.plant_no} ]]);">
+						        <div class="card-img img-container">
+					            	<img th:if="${dto.img_id == 0 || dto.img_id == null}" src="/img/no-img.png" th:alt="${dto.org_img_name}" />
+					            	<img th:unless="${dto.img_id == 0 || dto.img_id == null}" th:src="${'/download/'+ dto.img_id}" th:alt="${dto.org_img_name}" />
+				                </div>
+				                <!-- <p><span class="keyword">#오늘의 가든</span><span class="keyword">#홍콩야자</span></p> -->
+				                <p th:text="${ dto.plant_nickname }" class="plant-nickname"></p>
+				                <p th:text="${ dto.plant_name }" class="plant-name"></p>
+						    </div>
+					    </div>
+					</div>
+					<div class="page-container">
+	                	<ul class="page">
+				    		<li>
+				    			<span th:if="${ page.existPrevPage }" class="btn-prev" th:onclick="'getPage(' + ${ page.startPage - 1 } + ')'">이전</span>
+					        </li>
+					        <li th:each="number : ${ #numbers.sequence(page.startPage, page.endPage) }">
+								<span th:if="${ page.page == number }" th:text="${ number }" class="btn-page" th:onclick="'getPage(' + ${ number } + ')'"></span>
+					            <span th:if="${ page.page != number }" th:text="${ number }" class="btn-page" th:onclick="'getPage(' + ${ number } + ')'"></span>
+							</li>
+					        <li>
+					            <span th:if="${ !page.existNextPage }" class="btn-next" th:onclick="'getPage(' + ${ page.endPage + 1 } + ')'">다음</span>
+					        </li>
+					    </ul>
+					</div>
+                </div>
+                <div th:unless="${!myplantList.isEmpty()}" class="msg-container site-width txt-center">
+			    	<p class="txt-green">등록된 내 식물이 없습니다... &#x1F605;</p>
+			    </div>
+            </div>
+        </section>
+    </div>
+</html>

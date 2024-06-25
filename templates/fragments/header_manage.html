@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	th:fragment="manageHeaderFragment">
+	<header class="header">
+	    <nav id="nav" class="header-inner manage flex-container">
+	    	<div class="flex-container">
+	             <a sec:authorize="isAnonymous()" class="logo txt-bold txt-green" th:href="@{/}">서비스로 돌아가기</a>
+	             <a sec:authorize="isAuthenticated()" class="logo txt-bold txt-green" th:href="@{/main}">서비스로 돌아가기</a>
+	         </div>
+	    	<div class="aside-menu flex-container">
+               <ul class="flex-container">
+					<li>
+						<a sec:authorize="isAnonymous()" href="/login/login.do" class="txt-green btn-h-login">LOGIN</a>
+						<a sec:authorize="isAuthenticated()" href="/logout.do" class="txt-green">로그아웃</a>
+					</li>
+					<li><span class="bar"></span></li>
+					<li><a sec:authorize="isAnonymous()" href="/login/regist.do">회원가입</a></li>
+               		<li><a sec:authorize="isAuthenticated()" class="menu-user txt-ir" th:href="@{/mypage/editUserInfo.do}" th:text="${nickname}"></a></li>
+               </ul>
+           </div>
+	    </nav>
+	</header>
+</html>

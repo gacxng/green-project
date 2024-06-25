@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/defaultLayout}">
+   <div layout:fragment="content" class="content-container">
+   <script>
+   document.addEventListener("DOMContentLoaded", function() {
+       document.getElementById("user_id").addEventListener("input", function() {
+           isIdChecked = false;
+           document.getElementById("duplicateMessage").innerText = "";
+       });
+       document.getElementById("user_nickname").addEventListener("input", function() {
+           isNickChecked = false;
+           document.getElementById("messageNick").innerText = "";
+       });
+       document.getElementById("email").addEventListener("input", function() {
+           isEmailChecked = false;
+           document.getElementById("messageEmail").innerText = "";
+       });
+   });
+   </script>
+      <section class="site-width layout-pd-L">
+         <div class="title-container txt-center">
+            <h1 class="h1">회원가입</h1>
+         </div>
+         <div class="regist-form-container layout-pd-S pt-0">
+            <form id="regist" action="/login/regist.do" method="post" enctype="multipart/form-data">
+               <div class="form-inner regist-form max-w-640">
+                  <div class="input-container">
+                     <label>
+                          <input type="text" name="user_id" id="user_id" class="mr-10" placeholder="아이디는 12글자 이내로 입력해주세요" maxlength="12">
+                          <button type="button" name="idCheck" onclick="checkDuplicate()" class="btn check">중복확인</button>
+                      </label>
+                      <span id="duplicateMessage" class="form-msg"></span>
+                  </div>
+                  <div class="input-container">
+                      <label>
+                           <input type="password" id="user_pw" name="user_pw" placeholder="비밀번호는 16글자 이내로 입력해주세요" maxlength="16">
+                       </label>
+                       <span id="messagePw" class="form-msg"></span>
+                  </div>
+                  <div class="input-container">
+                     <label>
+                          <input type="password" id="user_pwCheck" name="user_pwCheck" placeholder="비밀번호는 16글자 이내로 입력해주세요" maxlength="16">
+                      </label>
+                      <span id="messagePwChk" class="form-msg"></span>
+                  </div>
+                  <div class="input-container">
+                      <label>
+                           <input type="text" name="user_nickname" id="user_nickname" class="mr-10" placeholder="닉네임은 10글자 이하로 입력해주세요" maxlength="10">
+                    		<button type="button" name="duplicateNickname" onclick="checkDuplicateNick()" class="btn check">중복확인</button>
+                       </label>
+                       <span id="messageNick" class="form-msg"></span>
+                  </div>
+                  <div class="input-container">
+                      <label>
+                           <input type="text" name="user_name" maxlength="9" placeholder="이름을 입력해주세요">
+                       </label>
+                       <span id="messageName" class="form-msg"></span>
+                  </div>
+                  <div class="input-container input-tel">
+					<label class="flex-container">
+                         <!-- <span class="label-txt">휴대전화</span> -->
+                         <input type="number" name="tel1" maxlength="3" oninput="maxLengthCheck(this)" placeholder="010">&nbsp;&nbsp;-&nbsp;&nbsp;
+                         <input type="number" name="tel2" maxlength="4" oninput="maxLengthCheck(this)" placeholder="0000">&nbsp;&nbsp;-&nbsp;&nbsp;
+                         <input type="number" name="tel3" maxlength="4" oninput="maxLengthCheck(this)" placeholder="0000">
+                     </label>
+                     <span id="messageTel" class="form-msg"></span>
+                  </div>
+                  <div class="input-container w-100">
+                       <label>
+                            <!-- <span class="label-txt">이메일</span> -->
+                            <input type="text" id="email" name="email" class="mr-10" placeholder="이메일을 입력해주세요" required>
+                            <button type="button" name="duplicateEmail" onclick="checkDuplicateEmail()" class="btn check">중복확인</button>
+                        </label>
+                        <span id="messageEmail" class="form-msg"></span>
+                  </div>
+<!--                   <div class="input-container">
+                          <label>
+                               <span class="label-txt">프로필사진</span>
+                               <input type="file" name="userimg" id="userimg">
+                               <span id="messageFile" class="form-msg"></span>
+                           </label>
+                       </div> -->
+                  <p th:text="${message}"></p>
+                  <div class="btn-container txt-center">
+                      <input class="btn btn-round btn_registButton btn-submit min-w-200" type="button" id="registButton" value="회원가입" onclick="validateForm()">
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="txt-center">
+              <input class="btn_insert txt-green" type="button" value="로그인하기" th:onclick="|location.href='@{/login/login.do}'|">
+              <span class="bar"></span>
+              <input class="btn_insert" type="button" value="아이디찾기" th:onclick="|location.href='@{/login/find_id.do}'|">
+              <span class="bar"></span>
+              <input class="btn_insert" type="button" value="비밀번호찾기" th:onclick="|location.href='@{/login/find_pw.do}'|">
+          </div>
+      </section>
+   </div>
+</html>

@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+/* 샵 : 지도 */
+#map, #map_wrap {
+	margin:0;
+	padding:0;
+	font-family:'Malgun Gothic',dotum,'돋움',sans-serif;
+	font-size:12px;
+	}
+#map {
+	min-height:100vh;
+	overflow:hidden;
+	top:0;
+}
+/*
+#map div img[role="presentation"] {
+	background-color:var(--gray);
+} */
+#menu_wrap {
+	position:fixed;
+	left:0;
+	top:66px;
+	height:var(--full);
+	width:320px;
+	z-index:100;
+	background-color:var(--bg-gray);
+	overflow:hidden;
+	box-shadow:var(--card-shadow);
+}
+#menu_wrap .menu_inner {
+	padding:26px;
+	overflow:hidden;
+	height:calc(100% - 84px);
+}
+.placeList-container {
+	overflow:hidden;
+	overflow-y:auto;
+	height:calc(100% - 140px);
+}
+.placeList-container-inner {
+	padding-right:20px;
+}
+.search-container .search-bar {
+	width:var(--full);
+	height:40px;
+	padding:2px 36px 2px 10px;
+}
+#menu_wrap .search-container .ic-search {
+	top:4px;
+	right:10px;
+}
+#searchWithinMap {
+	position:fixed;
+	left:340px;
+	bottom:20px;
+	display:block!important;
+}
+#searchWithinMap button {
+	min-width:140px;
+	margin:2px;
+	background-color:rgba(0,0,0,0.6);
+	color:var(--white);
+	height:40px;
+	border-radius:var(--border-r-10);
+}
+#searchWithinMap button:hover {
+	background-color:#000;
+}
+.placeList-container {
+	overflow:hidden;
+	overflow-y:auto;
+	height:calc(100% - 160px);
+}
+
+#placesList {
+	overflow-y:auto;
+	padding:2px;
+}
+#placesList h5 {
+	font-size:17px;
+	font-weight:bold;
+	margin-bottom:8px;
+}
+#pagenation {
+	margin-top:26px;
+}
+#pagenation > a {
+	width:26px;
+	height:26px;
+	line-height:26px;
+	text-align:center;
+	margin:0 6px;
+	overflow:hidden;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	display:inline-block;
+	border-radius:20px;
+	background-color:var(--white);
+}
+#pagenation a:hover,
+#pagenation > a.on {
+	background-color:var(--pale-green-clear);
+}
+#pagenation .info {
+	padding:10px;
+	border-radius:var(--border-r-10);
+}
+
+#placesList .item {
+	padding:10px;
+	border-radius:var(--border-r-10);
+	background-color:var(--white);
+	margin-bottom:10px;
+}
+#placesList .item:hover {
+	outline:2px solid var(--primary-green);
+	background-color:rgba(222, 239, 233, 0.4);
+}
+#pagination {
+	margin-top:26px;
+}
+#pagination > a {
+	width:26px;
+	height:26px;
+	line-height:26px;
+	text-align:center;
+	margin:0 6px;
+	overflow:hidden;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	display:inline-block;
+	border-radius:20px;
+	background-color:var(--white);
+}
+#pagination a:hover,
+#pagination > a.on {
+	background-color:var(--pale-green-clear);
+}

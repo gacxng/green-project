@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko"
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container user-post">
+   <section class="post-slider-section">
+         <div id="post-img-swiper" class="post-img-slider swiper layout-pd-L">
+            <div class="swiper-wrapper">
+                <a href="#" class="dis-block swiper-slide" th:each="dto : ${fileDto}">
+                   <div class="card-img img-container" >
+                     <img th:if="${dto.img_id == 0 || dto.img_id == null}" src="/img/no-img.png" th:alt="${dto.org_file_name}" />
+                     <img th:unless="${dto.img_id == 0 || dto.img_id == null}" th:src="'/img/post/' + ${dto.file_name}"/>
+                   </div>
+               </a>
+            </div>
+            <div class="swiper-button-prev btn-prev"></div>
+            <div class="swiper-button-next btn-next"></div>
+         </div>
+      </section>
+      <section class="post-content-section max-w-740 layout-pd-L pb-0">
+         <div class="user mb-10">
+            <a href="#" class="user_id mb-10 dis-block">
+               <span class="user-img-container dis-inlineBlock txt-valign-middle mr-6"><img src="/img/ic-user.svg" /></span>
+               <span class="font-size-15 txt-bold" th:text="${nickName}"></span>
+            </a>
+         </div>
+            <div class="title-container">
+               <h2 class="h2" th:text="${postDto.title}"></h2>
+            </div>
+            <div class="tag-container mb-30">
+               <p class="tag" th:text="${postDto.keyword}"></p>
+            </div>
+            <div class="post-content input-container mb-10">
+               <textarea onkeyup="resize(this)" onkeydown="resize(this)" rows="6" th:text="${postDto.p_content}" readonly class="w-100"></textarea>
+            </div>
+            <div class="flex-container">
+               <p class="font-size-13 mr-6">
+                     <span class="txt-gray txt-bold">Update </span>
+               <span class="update_date" th:text="${#temporals.format(postDto.regist_date, 'yyyy-MM-dd HH:mm:ss')}"></span>
+               </p>
+               <div class="like-and-reply font-size-13 mr-6">
+                  <button type="button" class="like-button" th:classappend="${likeStatus} ? 'liked' : ''" th:attr="data-post-no=${postDto.post_no}, data-user-id=${userId}" onclick="likeBtn(this)">
+                     <span class="like-icon"><i class="material-icons font-size-12">&#xe87d;</i></span>
+                     <span class="like" th:text="${likeCnt}"></span>
+                  </button>
+                </div>
+                <div class="hit-cnt font-size-13 ">
+                    <span class="hit-icon"><i class="material-icons">&#xe8f4;</i></span>
+                    <span class="hit" th:text="${postDto.hit}"></span>
+                </div>
+            </div>
+            <div class="btn-container txt-right">
+                 <input type="button" value="목록" onclick="goList()" class="btn btn-post">
+                 <div th:if="${userId == postDto.user_id}">
+	               <input type="button" value="글 삭제" th:onclick="'postDelete('+${postDto.post_no}+')'" class="btn btn-post">
+	               <input type="button" value="글 수정" th:onclick="'postEdit('+${postDto.post_no}+')'" class="btn btn-post btn-submit btn-writePopup">
+	             </div>  
+            </div>
+      </section>
+      <div class="popup-container"><!-- 팝업 시작 -->
+           <div class="popup">
+               <span class="popup-close">close</span>
+               <div class="popup-content-container">
+                   <p class="h2">다이어리 수정</p>
+                   <form name="editPost" action="editPost.do" method="post">
+                       <div class="input-container">
+                            <input type="hidden" name="post_no" id="post_no" readonly>
+                            <input type="hidden" name="board_no" id="board_no" readonly>
+                       </div>
+                       <div class="input-container">
+                           <label>
+                                <input type="hidden" name="user_id" id="user_id" readonly>
+                           </label>
+                       </div>
+                       <div class="input-container">
+                            <label>
+                                <span class="label-txt">글 제목</span>
+                                <input type="text" name="title" id="title">
+                     </label>
+                       </div>
+                       <div class="input-container">
+                           <label>
+                                <span class="label-txt">글 내용</span>
+                                <textarea name="p_content" id="p_content" class="w-100" rows="3"></textarea>
+                           </label>
+                       </div>
+                       <div class="btn-container txt-right">
+                            <button class="btn btn-reset" id="editReset">다시쓰기</button>
+                            <button class="btn btn-submit" onclick="saveEdit()">저장</button>
+                       </div>
+                   </form>
+               </div>
+          </div>
+      </div><!-- // 팝업 끝 -->
+      <div class="max-w-740 separator layout-pd-L"></div>
+      <section class="post-reply-section max-w-740">
+         <div class="write-reply-container mb-20">
+            <p class="font-size-18 txt-bold mb-20">댓글 작성하기</p>
+            <form name="reply" action="/replyWrite.do" method="post"><!-- write.do와 같아보임 -->
+                <div>
+                   <input name="post_no" type="hidden" class="post_no" th:value="${postDto.post_no}" readonly>
+                   <input name="reply_no" type="hidden" class="nextNo" th:value="${nextNo}" readonly>
+                </div>
+                <div>
+                   <a href="#" class="user_id mb-10 dis-block">
+                      <span class="user-img-container">
+                         <img src="/img/ic-user.svg" />
+                      </span> 
+                      <input class="font-size-14 txt-bold post-reply-userId" th:value="${userId}" name="user_id" readonly></input>
+                   </a>
+                </div>
+                <div>
+                   <textarea onkeyup="resize(this)" onkeydown="resize(this)" rows="5" class="r_content w-100" name="r_content"></textarea>
+                </div>
+                <div class="btn-container reply_btn txt-right">
+                  <input type="button" value="댓글 작성" onclick="saveReply(this)" class="btn btn-post btn-submit">
+               </div>
+             </form>
+         </div>
+         <div class="layout-pb-L">
+            <div class="replyList mb-12" th:each="dto : ${replyDto}">
+             <div class="card full-card">
+                 <ul class="post-reply-ul">
+                     <li>
+                         <div class="user mb-6">
+                              <span class="user-id font-size-12 txt-bold" th:text="${dto.user_nickname}"></span>
+                          </div>
+                          <div>
+                              <textarea th:id="'replyEdit-'+ ${dto.reply_no}" class="reply-textarea w-100" style="display:none;"></textarea>
+                              <pre th:text="${dto.r_content}" th:id="'replyContent-'+${dto.reply_no}" class="font-size-14"></pre>
+                          </div>
+                          <div class="btn-container reply_btn txt-right" th:if="${userId == dto.user_id}">
+                              <input type="button" value="수정" th:id="'editButton('+${dto.reply_no}+')'" th:onclick="'replyEdit('+${dto.reply_no}+')'" />
+                              <span class="bar"></span>
+                              <input type="button" value="삭제" th:onclick="'deleteReply('+${dto.reply_no}+')'">
+                          </div>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+         </div>
+   </section>
+</div>
+</html>

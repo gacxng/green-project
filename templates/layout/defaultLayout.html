@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 Head 영역 -->
+	<head th:replace="~{fragments/config :: configFragment}">
+		<title layout:title-pattern="$LAYOUT_TYTLE : $CONTENT_TITLE"></title>
+	</head>
+	<body>
+		<!-- 공통 Header 레이아웃 -->
+		<header th:replace="~{fragments/header :: headerFragment}"></header>
+		
+		<!-- 공통 Content 레이아웃 -->
+		<th:block layout:fragment="content"></th:block>
+		
+		<!-- 공통 Footer 레이아웃 -->
+		<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+		<div class="btn-top">to Top</div>
+	</body>
+</html>

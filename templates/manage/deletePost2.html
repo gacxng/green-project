@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>관리자 | 게시물 관리</title>
+	</head>
+	<div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title breadscrumb txt-gray">
+	            	<a th:href="@{/manage/board.do}"><span>게시판 / 게시물 관리</span></a>
+					<span class="ic-arrow txt-valign-top"></span>
+					<a th:href="@{/manage/deletePost2.do}"><span class="txt-white">가드너스다이어리</span></a>
+				</h1>
+	        </div>
+	        <div class="side-content">
+	        	<div class="table-aside-container">
+	        		<div>
+	        			<button class="btn tbl-type-1" type="button" onclick="delListPosts()">선택 게시물 삭제</button>
+	        		</div>
+	        		<div>
+       			      	<form name="searchP2" action="/searchP2.do" method="get">
+	                        <span> 
+	                        	<input name="keyword" type="text" id="searchKeyword" placeholder="게시물검색">
+			        			<input type="submit" value="게시물 검색" class="btn tbl-type-1">
+		                         <i class="material-icons"></i>
+	                        </span>
+                       	</form>
+                    </div>
+	        	</div>
+		        <div class="table-container">
+	                <table class="table-post w-100" id="taskList">
+	                    <tr>
+	                        <th><input type="checkbox" data-select-all2 onclick="toggleSelectAllPosts(this)"></th> <!-- 전체 선택 -->
+		                    <th>게시물 번호</th>
+	                        <th>제목</th>
+	                        <th>작성자</th>
+	                        <th>작성일</th>
+	                        <th>조회수</th>
+	                    </tr>
+	                    <tr th:each="dto : ${list}">
+	                        <td><input type="checkbox" class="post-checkbox"></td>
+	                        <td th:text="${dto.post_no}">게시물 번호</td>
+	                        <td th:text="${dto.title}">제목</td>
+	                        <td th:text="${dto.user_id}">작성자</td>
+	                        <td th:text="${#temporals.format(dto.regist_date, 'yyyy-MM-dd HH:mm:ss')}">작성일</td>
+	                        <td th:text="${dto.hit}">조회수</td>
+	                    </tr>  
+                        <tr th:if="${noResults}">
+                            <td colspan="6" id="noResultsMessage">검색 결과가 없습니다.</td>
+                        </tr>
+	                </table>
+	             </div>
+             </div>
+		</div>
+	</div>
+</html>

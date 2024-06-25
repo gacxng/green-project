@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko"
+     xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined" rel="stylesheet">
+    <link th:href="@{/css/reset.css}" rel="stylesheet" th:inline="css">
+	<link th:href="@{/css/common.css}" rel="stylesheet" th:inline="css">
+	<link th:href="@{/css/layout.css}" rel="stylesheet" th:inline="css">
+	<link th:href="@{/css/custom.css}" rel="stylesheet" th:inline="css">
+	<link th:href="@{/css/map.css}" rel="stylesheet" th:inline="css">
+	<script th:inline="javascript" type="text/javascript" th:src="@{/js/user.js}"></script>
+	<title>비밀번호 변경</title>
+</head>
+<body>
+<div class="content-container max-w-400">
+	<div class="title-container txt-center layout-pd-S">
+	    <h1 class="h2">비밀번호 변경</h1>
+	</div>
+	<div class="form-contatinter">
+	    <form class="form-chgPw" name="changePw" action="/mypage/changePw.do" method="post">
+	    	<div class="input-container">
+				<label>
+					<span class="label-txt mb-6">현재 비밀번호</span>
+					<input type="password" id="prePw " name="prePw" class="prePw" placeholder="현재 비밀번호">
+				</label>
+			</div>
+	    	<div class="input-container">
+				<label>
+					<span class="label-txt mb-6">새 비밀번호</span>
+					<input type="password" id="nextPw" name="nextPw" class="nextPw" placeholder="비밀번호는 16글자 이내로 입력해주세요" maxlength="16">
+				</label>
+			</div>
+	    	<div class="input-container">
+				<label>
+					<span class="label-txt mb-6">새 비밀번호 확인</span>
+					<input type="password" id="nextPwChk" name="nextPwChk" class="nextPwChk" maxlength="16">
+					<span id="duplicateMsg" class="form-msg"></span>
+				</label>
+			</div>
+			<div class="btn-container txt-center">
+				<input type="button" class="btn btn-round btn_cacelChwPw" id="cancelChwButton" value="취소">
+	            <input type="button" class="btn btn-round btn-submit btn_chwPwButton" id="chgPwButton" value="확인" onclick="chgPw()">
+			</div>
+	    	<div class="mb-20 mt-20">
+	    		<p th:if="${errorMessage}" th:text="${errorMessage}" class="font-size-14 txt-green"></p>
+	    	</div>
+	    </form>
+	</div>
+</div>
+</body>
+</html>

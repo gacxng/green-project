@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>관리자 | 회원관리</title>
+	</head>
+	<div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title">회원관리</h1>
+	        </div>
+	        <div class="side-content">
+	        	<div class="table-aside-container">
+		        	<div>
+		        		<button class="btn tbl-type-1" type="button" onclick="delListUser()">선택 회원 삭제</button>
+		        	</div>
+		        	<div class="search-container ic-20">
+		        		<form name="searchUser" action="/searchUser.do" method="get">
+                        	<input name="keyword" type="text" id="searchKeyword" placeholder="회원검색">
+		        			<input type="submit" value="회원 검색" class="btn tbl-type-1">
+                      	</form>
+                    </div>
+	        	</div>
+		        <div class="table-container">
+	                <table class="table-user" id="taskList">
+	                    <tr>
+	                        <th><input type="checkbox" data-select-all onclick="toggleSelectAll(this)" ></th> <!-- 전체 선택 -->
+	                        <th>회원 번호</th>
+	                        <th class="min-w-160">아이디</th>
+	                        <th class="min-w-160">이름</th>
+	                        <th class="min-w-160">닉네임</th>
+	                        <th class="min-w-160">전화번호</th>
+	                        <th class="min-w-160">이메일</th>
+	                    </tr>
+	                    <tr th:each="dto : ${list}">
+	                        <td><input type="checkbox" class="user-checkbox"></td> <!-- 개별 선택 -->
+	                        <td th:text="${dto.user_no}">0001</td>
+	                        <td th:text="${dto.user_id}">dlrkdus2020</td>
+	                        <td th:text="${dto.user_name}">이가연</td>
+	                        <td th:text="${dto.user_nickname}">연콩이</td>
+	                        <td th:text="${dto.tel}">010-9436-6375</td>
+	                        <td th:text="${dto.email}">dlrkdus2020@naver.com</td>
+	                    </tr>  
+                        <tr th:if="${noResults}">
+                            <td colspan="7" id="noResultsMessage">검색 결과가 없습니다.</td>
+                        </tr>
+	                </table>
+	                <!-- <div class="page-container">
+	                    <button class="btn-prev">prev</button>
+	                    <span class="page active">1</span>
+	                    <span class="page">2</span>
+	                    <span class="page">3</span>
+	                    <button class="btn-next">prev</button>
+	                </div> -->
+<!-- 	                <div>
+						<ul class="page">
+						    Check if 'page' is null or undefined
+						    <li th:if="${page != null and page.existPrevPage}" class="prev">
+						        <a class="page_link" th:href="@{'/user_info/' + ${page.startPage - 1}}">이전</a>
+						    </li>
+						    <li th:each="number : ${#numbers.sequence(page != null ? page.startPage : 1, page != null ? page.endPage : 1)}" class="page_item">
+						        <a class="page_link_bold" th:if="${page != null and page.page == number}" th:href="@{'/user_info/' + ${number}}" th:text="${number}"></a>
+						        <a class="page_link" th:if="${page == null or page.page != number}" th:href="@{'/user_info/' + ${number}}" th:text="${number}"></a>
+						    </li>
+						    <li th:if="${page != null and page.existNextPage}" class="next">
+						        <a class="page_link" th:href="@{'/user_info/' + ${page.endPage + 1}}">다음</a>
+						    </li>
+						</ul>
+					</div> -->
+	             </div>
+             </div>
+		</div>
+	</div>
+</html>

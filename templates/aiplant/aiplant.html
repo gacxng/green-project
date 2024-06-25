@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/defaultLayout}">
+<head>
+	<script th:inline="javascript" type="text/javascript" th:src="@{/js/aiplant.js}"></script>
+</head>
+<div layout:fragment="content">
+    <form name="aiKeyword" th:action="aiKeyword.do" method="post">
+        <div class="content-container">
+            <section class="layout-pd-L">
+                <div class="txt-center site-width">
+                    <div class="ai-title-img-container max-w-640 layout-pd-L pt-0">
+						<img src="/img/ai-title.png" alt="내 식물 추천 받기. 관심사를 알려주세요. 나에게 꼭 맞는 식물을 초록이가 추천해드려요! :)">
+					</div>
+                    <h1 class="h1 mb-20">내 식물 추천 받기</h1>
+                    <div th:each="dto : ${list2}">
+                    	<p>
+	                    	<span class="txt-break"><span class="txt-green" th:text="${dto.user_nickname}">OOO</span> 님의 관심사를 알려주세요.</span>
+	                    	나에게 꼭 맞는 식물을 초록이가 추천해드려요! :)
+                    	</p>
+                	</div>
+                </div>
+            </section>
+            <section class="bg-green layout-pd-L">
+                <div class="max-w-740">
+                    <h2 class="h3">마이 키워드</h2>
+                    <div>
+                        <ul class="tag-container mykeyword">
+                            <li class="tag type-ai selected">
+                                <span class="tag-txt">벤자민</span>
+                                <span class="tag-close">x</span>
+                            </li>
+                            <li class="tag type-ai selected">
+                                <span class="tag-txt">그늘을 좋아하는</span>
+                                <span class="tag-close">x</span>
+                            </li>
+                            <li class="tag type-ai selected">
+                                <span class="tag-txt">성장이 빠른</span>
+                                <span class="tag-close">x</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="separator layout-pd-S"></div>
+                    <div class="btn-container txt-right">
+                        <button class="btn btn-round btn-reset" type="button">초기화</button>
+                        <input class="btn btn-round btn-submit" type="button" name="aiKeyword" onclick="sendKeywords()" th:value="추천받기">
+                    </div>
+                </div>
+            </section>
+            <section th:each="keygory : ${list3}" class="hot-keyowrd-section layout-pd-L pb-0">
+                 <div class="max-w-740">
+                     <h2 class="h3" th:text="${keygory.keygory_name}">핫 검색어</h2>
+                     <div>
+                         <ul class="tag-container ai-tags">
+                             <li class="tag type-ai selected" th:each="keyword : ${keygory.keywords}">
+                                 <span class="tag-txt" th:text="${keyword.keyword}">키워드</span>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+             </section>
+             <div class="layout-pd-L"></div>
+        </div>
+    </form>
+</div>
+</html>

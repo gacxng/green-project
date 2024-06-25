@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	th:fragment="footerFragment">
+	<footer class="footer">
+	    <div class="footer-inner flex-container">
+	        <p><a sec:authorize="isAnonymous()" class="logo txt-bold txt-green" th:href="@{/}">초록초록</a></p>
+           	<p><a sec:authorize="isAuthenticated()" class="logo txt-bold txt-green" th:href="@{/main}">초록초록</a></p>
+	        <p>All copyrights reserved</p>
+	        <p id="year"></p>
+	    </div>
+	    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const yearText = `<p>&copy;${currentYear}</p>`;
+                document.getElementById('year').innerHTML = yearText;
+            });
+        </script>
+	</footer>
+</html>

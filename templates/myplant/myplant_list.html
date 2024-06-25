@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+	<head>
+		<!-- <script>
+		    document.addEventListener('DOMContentLoaded', function() {
+		        const urlParams = new URLSearchParams(window.location.search);
+		        const targetSection = urlParams.get('myplant_id');
+		        if (targetSection) {
+		            const el = document.getElementById(targetSection);
+		            if (el) {
+		                const offset = el.offsetTop + 200;
+		                setTimeout(() => {
+		                    window.scrollTo({ 
+		                        top: offset, 
+		                        behavior: 'smooth' 
+		                    });
+		                }, 200); // 200 밀리초 대기
+		                el.classList.add('active');
+		            } else {
+		                console.error(`Mplant ID ${targetSection} not found.`);
+		            }
+		        }
+		    });
+		</script> -->
+	</head>
+    <div layout:fragment="content" class="content-container bg-green">
+    	<div class="content-inner site-width layout-pd-L">
+    		<div class="title-container site-width bg-white flex-between-container">
+	            <h1 class="h2">내 식물 리스트</h1>
+	            <div class="breadscrumb-container">
+	            	<a th:href="@{/myplant}" class="link no-icon font-size-14 txt-gray">내 식물 등록</a>
+	            	<span class="ic-arrow"></span>
+	            	<a th:href="@{/myplant/myplant_list}" class="link no-icon font-size-14 txt-bold">내 식물 리스트</a>
+	            </div>
+	        </div>
+	        <section class="myplant-list-container">
+				<div th:each="dto : ${myplantList}" 
+						th:id="${'myplant_' + dto.plant_no}" 
+						class="card full-card pos-relative"
+						th:classappend="${dto.plant_no} == ${plantNo} ? 'active' : ''">
+			        <div class="show-more">펼쳐보기</div>
+			        <div class="myplant-info flex-between-container flex-valign-start">
+			        	<div class="myplant-feature-img img-container">
+		                	<div class="favorite-label pos-relative">
+		                		<span 
+								    th:id="'btn-' + ${dto.plant_no}" 
+								    class="ic-star" 
+								    th:classappend="${dto.favorite == 1} ? ' active' : ''" 
+								    th:onclick="addMyplantFavorite([[${dto.plant_no}]]);">
+								    내 식물 즐겨찾기
+								</span>
+		                	</div>
+		                	<img th:if="${dto.img_id == 0 || dto.img_id == null}" src="/img/no-img.png" th:alt="${dto.org_img_name}" />
+					        <img th:unless="${dto.img_id == 0 || dto.img_id == null}" th:src="${'/download/'+ dto.img_id}" th:alt="${dto.org_img_name}" />
+		                    <input type="hidden" th:value="${dto.plant_no}">
+		                </div>
+		                <div class="myplant-txt-container">
+		                    <div>
+		                        <h2 class="font-size-24 txt-bold mb-10" th:text="${dto.plant_nickname}"></h2>
+		                        <p class="txt-gray" th:text="${dto.plant_name}"></p>
+		                    </div>
+		                    <div class="separator mb-10"></div>
+		                    <div class="flex-container">
+		                        <p class="w-50 txt-bold mb-10 font-size-14">
+		                            <span class="meet-date dis-inlineBlock mr-6">처음 만난 날(등록일)</span>
+		                            <span class="txt-gray txt-normal" th:text="${dto.first_date}"></span>
+		                        </p>
+		                        <p class="w-50 txt-bold font-size-14">
+		                            <span class="last-water dis-inlineBlock mr-6">마지막으로 물준 날</span>
+		                            <span class="txt-gray txt-normal" th:text="${dto.last_water}"></span>
+		                        </p>
+		                    </div>
+		                    <div class="separator mb-10"></div>
+		                    <div class="myplant-description">
+		                    	<p th:text="${dto.user_memo}"></p>
+		                    </div>
+		                    <div class="separator mb-10"></div>
+		                </div>
+			        </div>
+					<div class="general-info">
+		                <!-- <div class="w-100">
+		                    <h2 class="font-size-18 txt-bold mb-20">관리 정보</h2>
+		                </div>
+		                <div class="plant-feature-container">
+		                    <div class="w-50 mb-10">
+		                        <span class="plant-feature">수명</span>
+		                        <span class="plant-feature-content">다년생</span>
+		                    </div>
+		                    <div class="w-50 mb-10">
+		                        <span class="plant-feature">꽃말</span>
+		                        <span class="plant-feature-content">꽃말꽃말꽃말</span>
+		                    </div>
+		                    <div class="w-50 mb-10">
+		                        <span class="plant-feature">서식지</span>
+		                        <span class="plant-feature-content">서식지 서식지</span>
+		                    </div>
+		                    <div class="w-50 mb-10">
+		                        <span class="plant-feature">평균 성장</span>
+		                        <span class="plant-feature-content">식물 높이</span>
+		                    </div>
+		                    <div class="w-50 mb-10">
+		                        <span class="plant-feature">적정 온도</span>
+		                        <span class="plant-feature-content">20C</span>
+		                    </div>
+		                    <div class="w-50 mb-10">
+		                        <span class="plant-feature">적정 습도</span>
+		                        <span class="plant-feature-content">습도</span>
+		                    </div>
+		                </div>
+		                <div class="separator mb-10"></div>
+		                <div class="general-info-content">
+		                    <p class="font-size-14"><span class="plant-feature mr-6">특징(생김새)</span>특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새)특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새) 특징(생김새)</p>
+		                </div> -->
+		                <div class="separator mb-10"></div>
+		                <div class="link-container txt-right">
+			                <a href="javascript:;" class="link-edit-post btn-popup" onclick="openPopup();">글 수정</a>
+			                <span class="bar"></span>
+			            	<a href="javascript:;" class="link-edit-post" th:onclick="deleteMyplant([[ ${dto.plant_no} ]]);">글 삭제</a>
+			            </div>
+		            </div>
+					<div class="popup-container">
+		                <div class="popup">
+		                    <span class="popup-close">close</span>
+		                    <div class="popup-content-container">
+		                        <h2 class="font-size-18 txt-bold mb-20">내 식물 수정하기</h2>
+		                        <div class="img-upload-container">
+		                         	<form name="form_myplant_update" action="updateMyplant.do" class="form-type-2 w-100" method="post" enctype="multipart/form-data">
+			                        	<div class="form-inner flex-between-container">
+				                        	<div class="upload-container">
+							                	<div class="img-container">
+							                		<img th:if="${dto.img_id == 0 || dto.img_id == null}" src="/img/no-img.png" th:alt="${dto.org_img_name}" class="preview" />
+					            					<img th:unless="${dto.img_id == 0 || dto.img_id == null}" th:src="${'/download/'+ dto.img_id}" th:alt="${dto.org_img_name}" class="preview" />
+							                	</div>
+												<label class="btn upload-img">
+													<input type="file" name="update_img" onchange="readURL(this);">
+													<i class="material-icons">&#xe412;</i>
+													<span>사진 재등록 하기</span>
+												</label>
+							                </div>
+				                            <div class="txt-container form-container">
+			                                	<div class="input-container">
+			                                		<label>
+							                            <span class="label-txt mb-12">식물 닉네임</span>
+							                            <input name="plant_nickname" type="text" th:value="${dto.plant_nickname}">
+							                        	<input type="hidden" name="plant_no" th:value="${dto.plant_no}">
+							                        </label>
+							                    </div>
+			                                    <div class="input-container">
+									                 <label>
+							                            <span class="label-txt mb-12">처음 만난 날</span>
+							                            <input name="first_date" type="date" th:value="${dto.first_date}">
+							                        </label>
+							                     </div>
+							                     <div class="input-container">
+									                 <label>
+							                            <span class="label-txt mb-12">마지막으로 물준 날</span>
+							                             <input name="last_water" type="date" th:value="${dto.last_water}">
+							                        </label>
+							                     </div>
+			                                    <div class="input-container">
+			                                    	<label>
+							                            <span class="label-txt mb-12">내 식물은요...</span>
+									                	<textarea name="user_memo" th:value="${dto.user_memo}" th:text="${dto.user_memo}"></textarea>
+							                        </label>
+			                                    </div>
+			                                    <div class="btn-container txt-right">
+			                                        <button class="btn btn-submit" type="button" onclick="updateMyplant(this);">수정하기</button>
+			                                    </div>
+				                            </div>
+				                         </div>
+		                            </form>
+		                        </div>
+		                   </div>
+		                </div>
+	            	</div>
+			    </div>
+	        </section>
+	        <div th:unless="${!myplantList.isEmpty()}" class="msg-container">
+		    	<p class="txt-green">등록된 내 식물이 없습니다... &#x1F605;</p>
+		    </div>
+    	</div>
+    </div>
+</html>

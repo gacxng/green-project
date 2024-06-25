@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko"
+   xmlns:th="http://www.thymeleaf.org"
+   th:fragment="headerFragment">
+   <header class="header">
+       <nav id="nav" class="header-inner flex-container">
+           <div class="flex-container">
+           	  <a sec:authorize="isAnonymous()" class="logo txt-bold txt-green" th:href="@{/}">초록초록</a>
+           	  <a sec:authorize="isAuthenticated()" class="logo txt-bold txt-green" th:href="@{/main}">초록초록</a>
+               <ul class="gnb flex-container">
+                   <li><a th:href="@{/community}">커뮤니티</a></li>
+                   <li><a th:href="@{/shop}">쇼핑</a></li>
+               </ul>
+           </div>
+           <div class="aside-menu flex-container">
+               <ul class="flex-container">
+	               <li><a sec:authorize="isAnonymous()" href="/login/login.do" class="txt-green">로그인</a></li>
+	               <li><a sec:authorize="isAuthenticated()" href="/logout.do" class="txt-green">로그아웃</a></li>
+	               <li><span class="bar"></span></li>
+	               <li><a sec:authorize="isAnonymous()" href="/login/regist.do">회원가입</a></li>
+               </ul>
+               <ul class="flex-container flex-valign-center">
+               	<li><a sec:authorize="isAuthenticated() and hasRole('ROLE_USER')" class="menu-user txt-ir" th:href="@{/mypage/userPostList.do}" th:text="${nickname}"></a></li>
+               	<li><a sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="menu-user txt-ir" th:href="@{/manage/user_info.do}" th:text="${nickname}"></a></li>
+               </ul>
+           </div>
+       </nav>
+   </header>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/defaultLayout}">
+<head>
+   <title>내 식물 추천 결과</title>
+</head>
+<div layout:fragment="content" class="content-container bg-yellow">
+	<section class="aiplant-result-section layout-pd-L">
+		<div th:each="dto : ${list}">
+            <div class="alplant-result-container site-width">
+           		<div class="title-container txt-center layout-pb-M">
+           			<div th:each="dto : ${list2}">
+						<p class="font-size-22 txt-bold" th:text="${dto.user_nickname} + ' 님에게 잘 맞는 식물은...?'">${nickname}에게 잘 맞는 식물은...?</p>
+	                 </div>
+	                 <h1 class="h1 mb-20"><span class="txt-green" th:text="${dto.plant_name}">${plant_name}</span>입니다!</h1>
+       			</div>
+             <div class="img-container layout-pb-L">
+                 <img th:src="${dto.plant_img}"/>
+             </div>
+                <div class="plant-info-container aiplant-info">
+                	<div class="plant-info flex-container">
+                		<p class="info-title">영문명</p>
+                		<p class="info-content" th:text="${dto.scientific_name}"></p>
+                	</div>
+                	<div class="plant-info flex-container">
+                		<p class="info-title">다년생</p>
+                		<p class="info-content" th:text="${dto.age} + '년 전후'"></p>
+                	</div>
+                	<div class="plant-info flex-container">
+                		<p class="info-title">물주기</p>
+                		<p class="info-content" th:text="${dto.watering}"></p>
+                	</div>
+                	<div class="plant-info flex-container">
+                		<p class="info-title">평균 성장</p>
+                		<p class="info-content" th:text="${dto.height}"></p>
+                	</div>
+                	<div class="plant-info flex-container">
+                		<p class="info-title">적정 온도</p>
+                		<p class="info-content" th:text="${dto.temperature} + '℃'"></p>
+                	</div>
+                	<div class="plant-info">
+                		<p class="info-title">특징</p>
+                		<p class="info-content" th:text="${dto.feature}"></p>
+                	</div>
+              </div>
+        	</div>
+        	<div class="separator layout-pd-S site-width"></div>
+            <div class="btn-container site-width">
+                <div class="btn-container txt-right" th:each="dto : ${list}">
+                    <a class="btn btn-reset" type="button" th:href="@{/aiplant/aiplant.do}" value="다시 추천 받기">다시 추천 받기</a>
+            		<a class="btn btn-submit" type="button" value="내 식물로 등록" data-plant-no="${dto.plant_no}" data-user-id="${dto.user_id}" th:onclick="sendPlant([[${dto.plant_no}]], [[${dto.user_id}]])">내 식물로 등록</a>
+                </div>
+            </div>
+            <div id="predictionResult"></div>
+        </div>
+	</section>
+</div>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/defaultManageLayout}">
+   <head>
+      <title>유저 | 내가 작성한 글</title>
+   </head>
+   <div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+      <div class="side-content-container">
+         <div class="table-title-container">
+               <h1 class="table-title">내가 쓴 글</h1>
+           </div>
+           <div class="side-content">
+                <div class="table-aside-container">
+	                <div>
+	                	<button class="btn tbl-type-1 btn-delete" type="button" onclick="deletePost()">선택 삭제</button>
+	                </div>
+					<form name="search" action="/mypage/postSearch.do" method="get">
+						<div class="flex-container">
+							<div class="select-container mr-6">
+								<select name="searchType">
+									<option value="">전체</option>
+									<option th:each="dto : ${boardList}" th:value="${dto.board_no}" th:text="${dto.board_name}"></option>
+								</select>
+							</div>
+							<div class="search-container">
+								<input type="text" name="keyword">
+								<input type="submit" value="검색" class="btn tbl-type-1">
+							</div>
+						</div>
+					</form>
+                </div>
+				<div class="table-container">
+					<table class="table-post w-100">
+						<tr>
+		                     <th><input type="checkbox" onclick="SelectAllPosts(this)"></th>
+		                     <th class="board_name">게시판명</th>
+		                     <th class="p_title">게시물 제목</th>
+		                     <th class="update_date">작성일</th>
+		                  </tr>
+		                  <tr th:each="dto : ${postList}">
+		                     <td><input type="checkbox" class="checkbox"></td>
+		                     <td class="post_no" style="display:none" th:text="${dto.post_no}"></td>
+		                     <td class="board_name" th:text="${dto.board_name}"></td>
+		                     <td class="title">
+		                     	<a th:href="@{('/community/postView/' + ${dto.post_no})}" th:text="${dto.title}"></a>
+		                     </td>
+		                     <td class="update_date" th:text="${#temporals.format(dto.update_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
+		                  </tr>
+		                  <tr th:if="${noResults}">
+		                     <td colspan="4" id="noResultsMessage">작성한 글이 없습니다.</td>
+		                  </tr>
+					</table>
+				</div>
+           </div>
+      </div>
+   </div>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>관리자 | 상품 관리</title>
+	</head>
+	<div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title txt-gray">
+	            	<a th:href="@{/manage/keygory.do}"><span>키워드 관리</span></a>
+					<span class="ic-arrow txt-valign-top"></span>
+					<a th:href="@{/manage/keyword2.do}"><span class="txt-white">에디터 추천</span></a>
+				</h1>
+	        </div>
+	        <div class="side-content">
+	        	<div class="table-aside-container">
+		        	<div>
+		        		<a class="btn tbl-type-1" type="button" onclick="delKeyword()">체크 키워드 삭제</a>
+	        		</div>
+	        		<div class="search-container ic-20">
+		        		<form name="searchKeyword" action="/searchKeyword2.do" method="get">
+		        			<input name="keyword" type="text" id="searchKeyword" placeholder="키워드 또는 카테고리번호 검색">
+		        			<input type="submit" value="검색">
+                        </form>
+                    </div>
+	        	</div>
+		        <div class="table-container">
+	                <table class="table-keyword">
+                        <tr>
+                            <th><input type="checkbox" onclick="toggleSelectAll3(this)" id="data-select-all"></th>
+                            <th>키워드 번호</th>
+                            <th class="min-w-200">키워드</th>
+                            <th>카테고리 번호</th>
+                            <th>기능관리</th>
+                        </tr>
+                        <tr th:each="dto : ${list}">
+                            <td><input type="checkbox" class="keyword-checkbox"></td>
+                            <td th:text="${dto.keyword_no}">1</td>
+                            <td th:text="${dto.keyword}">키우기 쉬운</td>
+                            <td th:text="${dto.category_no}">1</td>
+                            <td class="table-btn-container">
+                                <a href="javascript:;" class="link-edit-keyword btn tbl-type-2 btn-adminPopup" th:onclick="openPopup2();">키워드 수정</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${noResults}">
+                            <td colspan="5" id="noResultsMessage">검색 결과가 없습니다.</td>
+                        </tr>
+                    </table>
+                    <div class="popup-container" th:each="dto : ${list}">
+		                <div class="popup">
+		                    <span class="popup-close">close</span>
+		                    <div class="popup-content-container">
+	                        <h2 class="font-size-18 txt-bold mb-20">키워드 수정하기</h2>
+                         	<form name="form_keyword_update" action="updateKeyword.do" class="form-type-2" method="post" enctype="multipart/form-data">
+	                        	<div class="flex-between-container">
+		                            <div class="txt-container form-container">
+	                                	<div class="input-container">
+	                                		<label>
+					                            <span class="label-txt mb-6">키워드</span>
+					                            <input name="keyword" type="text" th:value="${dto.keyword}">
+					                        	<input type="hidden" name="keyword_no" th:value="${dto.keyword_no}">
+					                        </label>
+					                    </div>
+	                                    <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">카테고리 번호</span>
+					                            <input name="category_no" type="text" th:value="${dto.category_no}">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">keygory 번호</span>
+					                            <input name="keygory_no" type="text" th:value="${dto.keygory_no}">
+					                        </label>
+					                     </div>
+	                                     <div class="btn-container txt-right">
+	                                        <button class="btn btn-submit" type="button" onclick="updateKeyword(this);">수정하기</button>
+	                                     </div>
+		                             </div>
+		                    	 </div>
+                            </form>
+		                    </div>
+		                 </div>
+	            	</div>
+	            </div>
+             </div>
+		</div>
+	</div>
+</html>

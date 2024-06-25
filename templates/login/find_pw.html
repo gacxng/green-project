@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container">
+	<section class="site-width layout-pd-L">
+	    <div class="title-container txt-center">
+	        <h1 class="h1">비밀번호찾기</h1>
+	    </div>
+	    <div class="form-inner max-w-400">
+	        <form name="find_pw" id="find_pw" action="/login/find_pw.do" method="post">
+				<div class="form-inner">
+					<div class="input-container">
+		           		<label class="flex-wrap">
+		                    <!-- <span class="label-txt">이름</span> -->
+		                    <input type="text" id="user_name" name="user_name" placeholder="이름을 입력해주세요.">
+		                    <span id="messageName" class="form-msg"></span>
+		                </label>
+			    	</div>
+					<div class="input-container">
+		           		<label class="flex-wrap">
+		                    <!-- <span class="label-txt">아이디</span> -->
+		                    <input type="text" id="user_id" name="user_id" placeholder="아이디를 입력해주세요.">
+		                    <span id="messageId" class="form-msg"></span>
+		                </label>
+			    	</div>
+					<div class="input-container">
+		           		<label class="flex-wrap">
+		                    <!-- <span class="label-txt">이메일</span> -->
+		                    <input type="text" id="email" name="email" placeholder="이메일을 입력해주세요.">
+		                    <span id="messageEmail" class="form-msg"></span>
+		                </label>
+			    	</div>
+			    	<div class="btn-container pair-btns txt-center">
+                     	<input class="btn btn-submit min-w-200 btn_findPw" type="button" value="비밀번호 변경" onclick="chkFindPw()">
+                     </div>
+                     <div class="txt-center">
+	                    <input class="btn_insert txt-green" type="button" value="로그인하기" th:onclick="|location.href='@{/login/login.do}'|">
+	                    <span class="bar"></span>
+	                    <input class="btn_insert" type="button" value="아이디찾기" th:onclick="|location.href='@{/login/find_id.do}'|">
+	                    <span class="bar"></span>
+	                    <input class="btn_insert" type="button" value="비밀번호찾기" th:onclick="|location.href='@{/login/find_pw.do}'|">
+	                </div>
+				</div>
+	        </form>
+	    </div>
+	</section>
+	<script>
+      document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("user_name").addEventListener("input", function() {
+                isIdChecked = false;
+                document.getElementById("messageName").innerText = "";
+            });
+            document.getElementById("user_id").addEventListener("input", function() {
+                document.getElementById("messageId").innerText = "";
+            });
+            document.getElementById("email").addEventListener("input", function() {
+                document.getElementById("messageEmail").innerText = "";
+            });
+        });
+   </script>
+</div>
+</html>

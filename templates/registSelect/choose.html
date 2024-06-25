@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container bg-green">
+    <section class="site-width">
+	    <div class="CharContainer">
+	        <ul class="character-list layout-pd-L txt-center">
+	           	<li th:each="dto : ${charList}" class="character-item">
+	           		<form method="post" action="/login/insertChar.do">
+	                   <input type="hidden" name="user_id" th:value="${user_id}">
+	                   <input type="hidden" name="character_no" th:value="${dto.character_no}">
+	                   <button class="image-button mb-30" type="submit">
+	                       <img th:src="@{'/img/game_character/' + ${dto.char_img}}" alt="Character Image" class="char-img">
+	                   </button>
+	                </form>
+	                  <!-- <p class="character-info font-size-24 txt-bold" th:text="${dto.character_name}"></p> -->
+	                  <p class="character-info font-size-18" th:each="keyword : ${#strings.arraySplit(dto.join_keyword, ',')}" th:text="${keyword}"></p>
+	           	</li>
+	        </ul>
+	    </div>
+    </section>
+</div>
+</html>

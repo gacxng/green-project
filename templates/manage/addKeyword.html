@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>관리자 | 상품 관리</title>
+	</head>
+	<div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title breadscrumb txt-gray">
+	            	<a th:href="@{/manage/keygory.do}"><span>키워드 관리</span></a>
+					<span class="ic-arrow txt-valign-top"></span>
+					<a th:href="@{/manage/keyword.do}"><span>전체 키워드</span></a>
+					<span class="ic-arrow txt-valign-top"></span>
+					<a th:href="@{/manage/addKeyword.do}"><span class="txt-white">키워드 추가하기</span></a>
+				</h1>
+	        </div>
+	        <div class="side-content">
+	        	<div class="table-aside-container">
+                    <form id="form_input_keyword" name="form_input_keyword" action="/inputKeyword.do" method="post" enctype="multipart/form-data" class="form-type-2">
+                         <div class="addKeyword-container form-container">
+							<div class="input-container">
+                            	<label>
+                            		<span class="label-txt mb-6">키워드</span>
+                            		<input name="keyword" type="text" placeholder="예) 키우기 쉬운">
+								</label>
+							</div>
+		                     <div class="input-container">
+				                <label>
+		                            <span class="label-txt mb-6">카테고리 번호</span>
+		                            <input name="category_no" type="text" placeholder="1~10">
+		                        </label>
+		                     </div>
+		                     <div class="input-container">
+				                <label>
+		                            <span class="label-txt mb-6">keygory 번호</span>
+		                            <input name="keygory_no" type="text">
+		                        </label>
+		                     </div>
+		                     <div class="mb-20 mt-20 flex-between-container">
+								<label>
+									<input type="button" class="btn tbl-type-1 btn_cacelEditInfo" id="cacelEditInfo" value="취소" th:onclick="|location.href='@{/mypage/userPostList.do}'|" >
+									<input type="button" class="btn tbl-type-1 btn_updateInfo" id="updateInfo" value="수정" onclick="editInfo()">
+								</label>
+								<label>
+									<button class="btn tbl-submit" type="button" onclick="confirmKeyword();">추가하기</button>
+								</label>
+							</div>
+                 	 	</div>
+                     </form>
+	            </div>
+             </div>
+		</div>
+	</div>
+</html>

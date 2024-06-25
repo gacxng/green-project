@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	th:fragment="manageSidemenuFragment">
+    <div class="side-menu-container" sec:authorize="hasRole('ROLE_USER')">
+        <div class="user-info-container">
+            <p class="txt-bold mb-12" th:text="${nickname}"></p>
+            <a th:href="@{/mypage/editUserInfo.do}" class="font-size-14">
+                <span class="ic-wrap ic-14 txt-gray"><i class="material-icons mr-4">&#xe8b8;</i></span>
+                <span>내 정보 수정</span>
+            </a>
+        </div>
+        <ul class="side-menu-ul">
+            <li><a class="depth1-title" th:href="@{/mypage/userPostList.do}">내가 쓴 글</a></li>
+            <li><a class="depth1-title" th:href="@{/mypage/userReplyList.do}">내가 쓴 댓글</a></li>
+ <!--            <li><a class="depth1-title" th:href="@{/mypage/userPlantList.do}">내 식물 관리</a></li> -->
+        </ul>
+    </div>
+
+    <div class="side-menu-container" sec:authorize="hasRole('ROLE_ADMIN')">
+        <ul class="side-menu-ul">
+            <li><a class="depth1-title" th:href="@{/manage/user_info.do}">회원 관리</a></li>
+            <li><a class="depth1-title" th:href="@{/manage/board.do}">게시판/게시물 관리</a></li>
+            <li><a class="depth1-title" th:href="@{/manage/product.do}">상품 관리</a></li>
+            <!-- <li><a class="depth1-title" th:href="@{/manage/keygory.do}">키워드 관리</a></li> -->
+        </ul>
+    </div>
+</html>

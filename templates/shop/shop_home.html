@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+    <div layout:fragment="content" class="content-container">
+        <section class="shop-title-section bg-green"><!-- // 탑 스와이퍼 섹션 -->
+			<div id="shop-home-swiper" class="shop-home-swiper swiper">
+				<div class="swiper-wrapper pos-relative">
+			    	<div class="swiper-slide">
+						<a th:href="@{/aiplant/aiplant.do}" class="dis-block">
+							<img src="/img/product/shop-slide-1.png" alt="이달의 추천 식물" />
+						</a>
+					</div>
+			    	<div class="swiper-slide">
+						<a th:href="@{/aiplant/aiplant.do}" class="dis-block">
+							<img src="/img/product/shop-slide-2.png" alt="우리집에 어울리는 식물은?" />
+						</a>
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+        </section>
+        <section class="shop-tab-section site-width layout-pd-L">
+	        <div class="tab-container">
+	            <div class="tab-nav-inner">
+	                <ul class="tab-nav txt-center">
+	                    <li th:each="categoryDto : ${ categoryList }" class="tab-nav-item" th:id="'tab-' + ${category_no}"
+	                    	th:classappend="${categoryDto.category_no} == ${categoryNo} ? 'active' : ''">
+							<a href="javascript:;" th:onclick="getProductCategory([[ ${categoryDto.category_no} ]])">
+	                    		<span th:text="${categoryDto.category_name}"></span>
+	                    	</a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <div class="tab-contents">
+	            	<div class="tab-content active max-w-740" data-tab="tab-1">
+	                    <div th:if="${productList != null and !productList.isEmpty()}" class="tab-inner">
+	                    	<div th:each="productDto : ${ productList }" class="shop-slide">
+						       <a th:href="@{'/shop/shop_product/' + ${productDto.product_no}}" class="dis-block w-100">
+									<div class="img-container">
+	                                 	<img th:src="${productDto.img_path}" th:alt="${productDto.product_name}" />
+	                                 </div>
+                                   <div class="shop-slide-txt over-hidden">
+                                       <span class="font-size-10 txt-overflow" th:text="${productDto.manufacturer}"></span>
+                                       <p class="font-size-13 txt-bold txt-overflow mb-6" th:text="${productDto.product_name}"></p>
+                                   </div>
+                               </a>
+						    </div>
+	                    </div>
+	                    <div th:if="${ productList == null or productList.isEmpty() }" class="txt-center">
+                            <p class="txt-green">분류에 해당하는 식물이 없습니다...</p>
+	                    </div>
+	                </div>
+	             </div>
+			</div>
+		</section>
+        <section class="user-post-section layout-pd-L clear bg-lightGray">
+        	<div calss="title-container site-width">
+        		<p class="h2 txt-center">초록초록 가드너 다이어리</p>
+        	</div>
+        	<div th:if="${!gardnerDiaryList.isEmpty()}" id="shop-post-swiper" class="shop-post-swiper swiper pos-relative">
+				<div class="swiper-wrapper">
+			    	<div th:each="gardnerDiaryDto : ${ gardnerDiaryList }" class="card type-2 swiper-slide">
+		                <div class="post-img mb-20">
+		                    <a th:href="@{('/community/postView/'+${gardnerDiaryDto.post_no})}" class="mb-20">
+			                    <div class="card-img">
+			                    	<img th:if="${gardnerDiaryDto.img_id == 0 || gardnerDiaryDto.img_id == null}"
+											src="/shop/img/no-img.png" />
+									<img th:unless="${gardnerDiaryDto.img_id == 0 || gardnerDiaryDto.img_id == null}"
+										th:src="${'/shop/imgFile/'+ gardnerDiaryDto.img_id}" />
+			                    </div>
+		                    </div>
+		                    <div class="user">
+							    <div class="user-img img-container">
+							        <img th:src="${userDto != null && userDto.user_img != null ? '/img/' + userDto.user_img : '/img/ic-user.svg'}" alt="user_id" />
+							        <p th:text="${user_id != null ? user_id : '새싹님'}"></p>
+							    </div>
+							    <span class="user-id" th:text="${gardnerDiaryDto.user_id}"></span>
+							</div>
+		                    <p><span class="keyword" th:text="${gardnerDiaryDto.keyword}"></span></p>
+		                    <h2 class="font-size-16 txt-bold mb-10" th:text="${gardnerDiaryDto.title}"></h2>
+		                    <div class="like-and-reply">
+		                        <p class="like"><i class="material-icons txt-red mr-4">&#xe87d;</i><span th:text="${gardnerDiaryDto.p_like}"></span></p>
+		                        <p class="reply"><i class="material-icons mr-4">&#xe0b7;</i><span th:text="${gardnerDiaryDto.hit}"></span></p>
+		                    </div>
+		                </a>
+		            </div>
+				</div>
+				<div class="swiper-scrollbar site-width">
+					<span class="shop-post-swiper-scrollbar"></span>
+				</div>
+			</div>
+        </section>
+        <section class="local-plant-section site-width layout-pd-L"><!-- // 요즘 뜨는 샵 슬라이더 -->
+	        <div>
+	        	<div class="title-container mb-20 flex-between-container">
+	        		<h3 class="h3">우리 동네 샵</h3>
+	        		<div class="link-container txt-rigth">
+		        		<a th:href="@{/shop/shop_map.do}" class="link-read-more font-size-14">더 찾아보기</a>
+		        	</div>
+	        	</div>
+	        </div>
+	        <div class="flex-container col-2">
+	        	<div id="localshop_json" class="localshop-slider">
+	        		<div class="page shop-slide-wrapper">
+                  		<div th:each="shopDto : ${ shopListWithPage }" class="shop-slide">
+		       				<a th:href="${shopDto.place_url}" class="dis-block w-100" target="_blank">
+                                <div class="shop-slide-txt over-hidden">
+                                	<p th:text="${shopDto.category_name}" class="font-size-12 txt-gray mb-12"></p>
+                                	<p th:text="${shopDto.place_name}" class="font-size-16 txt-bold mb-6"></p>
+                                	<p th:text="${shopDto.address_name}" class="font-size-12 mb-6">
+                                	</p>
+                                	<p>
+                                		<i class="material-icons mr-4" style="font-size:12px;">&#xe32c;</i>
+                                		<span th:text="${shopDto.phone} ? ${shopDto.phone} : ''" class="font-size-12 mb-8"></span>
+                                	</p>
+                                </div>
+                            </a>
+					    </div>
+				    </div>
+				    <div th:if="${shopListWithPage.isEmpty()}" class="txt-center">
+			        	<p class="txt-green font-size-14">표시할 샵이 없습니다...&#x1F625;</p>
+			        </div>
+		   			<div class="page-container">
+	                	<div class="page">
+							<button type="button" th:if="${page.existPrevPage}" class="btn-prev active" th:onclick="'getLocalShopAjax(' + (${page.page - 1}) + ')'"></button>
+							<div class="flex-container ml-6 mr-6">
+								<div class="font-size-13"><span class="txt-green">우리 동네 샵</span>&nbsp;더보기&nbsp;</div>
+								<div class="font-size-12 mr-10 ml-10">
+									<span class="txt-green" th:text="${ page.page }"></span><span class="txt-gray"> / 5 &nbsp;</span>
+								</div>
+                            </div>
+                            <button type="button" class="btn-next active" th:onclick="'getLocalShopAjax(' + (${page.page + 1}) + ')'"></button>
+                        </div>
+					</div>
+				</div>
+				<div class="keywords-container bg-green">
+					<div class="top-clicked">
+						<h3 class="font-size-18 txt-bold mb-20">조회수 베스트</h3>
+						<ul class="top-clicked-keywords-ul">
+							<li class="font-size-13 mb-4" th:each="dto : ${topPost}">
+								<a th:href="@{('/community/postView/' + ${dto.post_no})}" th:text="${dto.title}"></a>
+							</li>
+						</ul>
+					</div>
+	            </div>
+	        </div>
+        </section>
+        <section class="shop-favorite-container pos-relative">
+        	<div>
+	        	<p class="font-size-17 txt-bold mb-20 txt-center"><span>찜한 식물 &#x1F44D;</span></p>
+		        <div id="favorite_product_json">
+		        	<div th:if="${favoriteProductList != null or !favoriteProductList.isEmpty()}" th:each="favorite : ${ favoriteProductList }" class="shop-slide">
+				       <a th:href="@{'/shop/shop_product/' + ${favorite.product_no}}" class="dis-block w-100">
+							<div class="img-container">
+		                   		<img th:src="${favorite.img_path}" th:alt="${favorite.product_name}" />
+		                   </div>
+		                    <div class="shop-slide-txt over-hidden">
+		                        <span class="font-size-10 txt-overflow" th:text="${favorite.manufacturer}"></span>
+		                        <p class="font-size-12 txt-medium txt-overflow mb-6" th:text="${favorite.product_name}"></p>
+		                    </div>
+		                </a>
+				    </div>
+				    <div th:if="${favoriteProductList == null or favoriteProductList.isEmpty()}" class="mb-60">
+						<p class="txt-green font-size-12">찜한 식물이<br>없어요 &#x1F605;</p>
+			        </div>
+		        </div>
+	        </div>
+        </section>
+    </div>
+</html>

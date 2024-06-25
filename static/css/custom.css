@@ -1,0 +1,1436 @@
+@charset "UTF-8";
+
+/* === 인덱스 === */
+.content-container.index {
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(30%, #ffffff), to(#E7F4ED));
+	background: -o-linear-gradient(bottom, #ffffff 30%, #E7F4ED 100%);
+	background: linear-gradient(0deg, #ffffff 30%, #E7F4ED 100%);
+}
+.index-title .h1 {
+	font-size:2.8em;
+}
+.index-img-container img {
+	width:100px;
+	display:block;
+	animation-iteration-count:5;
+	animation-timing-function:ease-in-out;
+}
+#char-1 {
+	animation-duration:2.2s;
+	animation-name:charAni-1;
+	animation-delay:300ms;
+}
+#char-2 {
+	animation-duration:2.3s;
+	animation-name:charAni-2;
+	animation-timing-function:ease-out;
+}
+#char-3 {
+	animation-duration:3s;
+	animation-delay:200ms;
+	animation-name:charAni-3;
+	animation-timing-function:ease-ing-out;
+}
+#char-4 {
+	animation-duration:6.5s;
+	animation-name:charAni-4;
+	animation-delay:1s;
+	animation-timing-function:ease-in-out;
+}
+#char-5 {
+	animation-duration:6.5s;
+	animation-name:charAni-5;
+	animation-delay:200ms;
+	animation-timing-function:ease-in;
+}
+@keyframes charAni-1 {
+	  0% {
+	  transform: rotate(-10deg);
+	}
+	  25% { 
+	  transform: rotate(28deg) scale(1.2);
+	}
+	  60% { 
+	  transform: rotate(-2) scale(0.88);
+	}
+	  100% { 
+	  transform: rotate(-10deg);
+	}
+}
+@keyframes charAni-2 {
+	0% { 
+  	transform: rotate(-12deg); 
+  }
+  25% { 
+  	transform: rotate(-112deg) scale(0.8); 
+  }
+  75% { 
+  	transform: rotate(2deg); 
+  }
+  100% { 
+  	transform: rotate(-12deg); 
+  }
+}
+@keyframes charAni-3 {
+	0% { 
+  	transform:rotate(-5deg); 
+  }
+  75% {
+  transform:rotate(90deg) scale(1);
+  }
+  100% {
+  transform:rotate(-368deg);
+  }
+}
+@keyframes charAni-4 {
+	0% { 
+  	transform:rotate(25deg); 
+  }
+  25% { 
+  	transform:rotate(-100deg); 
+  }
+  75% {
+  	transform:rotate(-23deg) scale(0.76);
+  }
+  100% {
+  transform:rotate(25deg);
+  }
+}
+@keyframes charAni-5 {
+	0% { 
+  	transform:rotate(-78deg) scale(0.92); 
+  }
+  25% {
+  	transform:rotate(366deg) scale(1.11);
+  }
+  100% {
+  transform:rotate(-78deg) scale(0.92);
+  }
+}
+
+
+/* === 게임 캐릭터 선택창 === */
+.character-list {
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	width:var(--full);
+}
+.character-list li {
+	margin-bottom:20px;
+}
+.character-list .image-button {
+	width:180px;
+	height:180px;
+}
+.char-img {
+	width:160px;
+}
+.char-img:hover {
+	transform:scale(1.15);
+	transition:all 300ms ease-out;
+}
+.character-result-section .h1 {
+	font-size:46px;
+	text-align:center;
+}
+.character-result-section .char-img {
+	width:220px;
+	animation-duration:2s;
+	animation-name:charResultAni;
+	animation-timing-function:ease-in;
+	animation-iteration-count:3;
+}
+@keyframes charResultAni {
+	  0% {
+	  transform:scale(1);
+	}
+	  30% { 
+	  transform:rotate(16deg) scale(1.2);
+	}
+	  70% { 
+	  transform:rotate(-14deg);
+	}
+	  100% { 
+	  transform:scale(1);
+	}
+}
+.character-result-section .char-nickname {
+	outline:none;
+	font-size:14px;
+	width:var(--full);
+	border-bottom:1px solid var(--primary-green);
+	padding:26px 16px;
+	margin-right:100px;
+}
+.character-result-section .btn {
+	position:absolute;
+	right:0;
+	bottom:10px;
+	border-radius:var(--input-border-r);
+	padding:6px;
+	min-width:80px;
+}
+.result-msg-container .btn-character {
+	padding:10px 16px;
+	border-radius:var(--border-r-10);
+	outline:1px solid var(--mid-gray);
+}
+.result-msg-container .btn-character:hover {
+	outline:1px solid var(--primary-green);
+	background-color:var(--pale-green-clear);
+}
+
+
+/* === 메인페이지 === */
+/* GameRoom & Myplant */
+.content-container.main {
+	padding-top:66px;
+}
+.main-top-section {
+    min-height:400px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    column-gap:40px;
+    position:relative;
+}
+.main-user-info {
+    position:relative;
+    min-width:190px;
+}
+.main-game-and-myplant {
+    width:var(--full, 100%);
+    min-height:300px;
+    height:524px;
+    flex:1;
+}
+.main-game-room, .main-myplant-room {
+    width:var(--full, 100%);
+    height:calc(100% + 12px);
+    border-radius:var(--border-r-20);
+    padding:20px;
+    box-sizing:border-box;
+    --webkit-box-sizing:border-box;
+    position:absolute;
+    top:0;
+    left:18px;
+    box-shadow:6px 0 10px 0 rgba(0,0,0,0.15);
+    border:1px solid var(--mid-gray, #D2D2D2);
+    background-color:var(--mid-gray, #D2D2D2);
+}
+.main-myplant-room {
+    padding:30px;
+}
+.main-game-room.active, .main-myplant-room.active {
+    z-index:10;
+    left:0;
+    background-color:var(--light-gray);
+    transition:all 500ms ease-in-out;
+    background-color:var(--bg-gray);
+}
+.main-game-room > p {
+    position:absolute;
+    top:30px;
+    left:30px;
+}
+.game-room {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    overflow:hidden;
+}
+.character-container {
+	display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    flex:1;
+    background-color:var(--pale-green);
+    border:1px solid #c2d6cb;
+    border-radius:var(--border-r-10);
+    padding:30px;
+    margin-right:20px;
+    box-sizing:border-box;
+}
+.my-character {
+    height:var(--full, 100%);
+    position:relative;
+}
+.my-character-img {
+    border-radius:100px;
+    text-align:center;
+    color:var(--gray);
+    position:absolute;
+    top:var(--half);
+    left:var(--half);
+    transform:translate(-50%, -50%);
+}
+.my-character-img img {
+	max-width:380px;
+}
+.progress-bar-container {
+    position:relative;
+    width:var(--full, 100%);
+}
+.progress-bar-container .prev-level {
+    position:absolute;
+    top:-6px;
+    left:0;
+}
+.progress-bar-container .next-level {
+    position:absolute;
+    top:-6px;
+    right:3px;
+}
+.progress-bar-wrapper {
+    width:var(--full, 100%);
+    height:20px;
+    position:relative;
+    background-color:var(--white);
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:20px;
+    outline:1px solid var(--primary-green);
+}
+.progress-bar {
+    min-width:0px;
+    height:var(--full, 100%);
+    background-color:var(--primary-green);
+    text-indent:-99999em;
+    font-size:1px;
+    color:transparent;
+    position:absolute;
+    top:0;
+    left:0;
+}
+.game-list-container {
+    width:220px;
+    background-color:var(--white);
+    border-radius:var(--border-r-10);
+    padding:20px;
+    box-sizing:border-box;
+    --webkit-box-sizing:border-box;
+}
+.game-todo-list > li {
+    font-size:12px;
+    padding:6px 10px;
+    background-color:var(--pale-green);
+    border-radius:var(--input-border-r);
+    margin-bottom:4px;
+}
+.game-todo-list .ic-check {
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:6px;
+    width:18px;
+    height:18px;
+    border-radius:9px;
+    background-color:var(--white);
+    position:relative;
+}
+.game-todo-list .ic-check::before {
+    content:"";
+    display:block;
+    position:absolute;
+    top:5px;
+    left:4px;
+    width:8px;
+    height:4px;
+    border-left:2px solid var(--mid-gray, #D2D2D2);
+    border-bottom:2px solid var(--mid-gray, #D2D2D2);
+    transform:rotate(-45deg);
+}
+.game-todo-list li.done {
+    color:var(--primary-green);
+}
+.game-todo-list li.done .ic-check::before {
+    color:var(--primary-green);
+    border-color:var(--primary-green);
+}
+.character-name {
+    height:60px;
+    border-radius:var(--border-r-10);
+    background-color:var(--primary-green);
+    color:var(--white);
+    font-size:14px;
+}
+.main-myplant-list-container {
+    height:var(--full, 100%);
+    max-height:330px;
+    overflow-x:hidden;
+    position:relative;
+}
+.main-myplant-list-inner {
+	min-height:280px;
+	padding-top:20px;
+	padding-bottom:20px;
+	position:absolute;
+	width:calc(100% - 2px);
+	border-radius:var(--border-r-10);
+	background-color:var(--pale-green);
+	border:1px solid #c2d6cb;
+}
+.myplant-li .main-myplant-card {
+    min-width:unset;
+    min-height:var(--full, 100%);
+    max-width:380px;
+    width:44%;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    max-height:120px;
+    margin:10px 18px;
+    padding:12px 20px;
+}
+.myplant-li .img-container {
+    width:86px;
+    height:86px;
+    border-radius:20px;
+    background-color:var(--mid-gray);
+    margin-right:24px;
+    min-width:unset;
+    min-height:unset;
+    outline:1px solid var(--secondary-green);
+}
+.myplant-li .img-container + div {
+	width:65%;
+}
+.main-myplant-notice {
+    position:absolute;
+    left:30px;
+    bottom:30px;
+    width:calc(100% - 60px);
+}
+
+.main-top-btn-container {
+    position:absolute;
+    left:0;
+    bottom:0;
+}
+.main-top-btn {
+    width:56px;
+    height:56px;
+    border-radius:30px;
+    font-size:12px;
+    border:1px solid var(--mid-gray, #D2D2D2);
+}
+.main-top-btn.active {
+    background-color:var(--dark-gray, #333);
+    color:var(--white);
+    box-shadow:10px 10px 10px 0 rgba(0,0,0,0.15);
+    border-color:var(--dark-gray, #333);
+}
+
+/* Main : 나를 위한 추천 글 */
+.main-post-swiper .swiper-wrapper {
+	padding-bottom:60px;
+}
+.main-post-swiper .btn-play {
+	height:22px;
+	border-radius:var(--input-border-r);
+	background-color:var(--dark-gray);
+	font-size:12px;
+	color:var(--white);
+}
+.main-card {
+    border:1px solid var(--light-gray);
+    padding:16px;
+    min-height:180px;
+    box-shadow:0 0 16px 0 rgba(0,0,0,0.15);
+    border-radius:var(--border-r-10);
+    position:relative;
+    overflow:hidden;
+    background-color:var(--white);
+    border:1px solid var(--mid-gray);
+}
+.main-card:hover {
+    animation-name:ani-mouseOver;
+	-moz-animation-duration:500ms;
+	-webkit-animation-duration:500ms;
+	animation-duration:500ms;
+	animation-iteration-count:normal;
+	animation-timing-function:cubic-bazier(1,0,0.8,1);
+	box-shadow:10px 16px 16px 0 rgba(0,0,0,0.2);
+    min-width:270px;
+    background-color:var(--primary-green);
+}
+.main-card:hover .tag {
+	color:var(--black);
+	background-color:rgba(255,255,255,0.7);
+}
+.main-card:hover h2 {
+    color:var(--white);
+}
+.main-card h2 {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    line-height:1.4;
+    height:4.4em;
+    white-space:normal;
+}
+
+
+@keyframes ani-mouseOver {
+  from {
+  	min-width:150px;
+  	
+  }
+  to {
+  	min-width:270px;
+  }
+}
+
+/* 메인 : 맞춤기능 */
+.card.main-card-col2 {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    flex-wrap:wrap;
+    flex:1;
+    max-width:unset;
+    min-height:120px;
+    max-width:500px;
+    position:relative;
+    padding-left:240px;
+    height:unset;
+}
+.card.main-card-col2::before {
+    content:"";
+    display:inline-block;
+    width:90px;
+    height:90px;
+    position:absolute;
+    top:50%;
+    left:17%;
+    transform:translateY(-50%);
+    
+}
+.card.main-card-col2.myplant {
+	background-color:#EFE8F8;
+}
+.card.main-card-col2.aiplant {
+	background-color:#FFF7D9;
+}
+.card.main-card-col2.myplant::before {
+	background:url('../img/upload.png') no-repeat center center;
+	background-size:contain;
+}
+.card.main-card-col2.aiplant::before {
+    background:url('../img/recommend.png') no-repeat center center;
+    background-size:contain;
+}
+
+/* 메인 : 요즘 뜨는 샵 */
+.shop-section .hot-products,
+.shop-section .local-shops {
+    background-color:var(--white);
+    padding:20px;
+    border-radius:var(--border-r-10);
+}
+.shop-slide-wrapper {
+	max-width:640px;
+    width:var(--full, 100%);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:10px;
+}
+#main_shop_json .shop-slide {
+	padding-top:5.4%;
+	position:relative;
+}
+#localshop_json .shop-slide {
+	padding-top:4.4%;
+	position:relative;
+}
+#main_shop_json .shop-slide::before,
+#localshop_json .shop-slide:before {
+	padding-top:5.3%;
+	font-family:'Material Icons';
+	content:"\ea12";
+	display:inline-block;
+	position:absolute;
+	top:-4px;
+	left:6px;
+	width:20px;
+	height:10px;
+	color:var(--primary-green);
+}
+.shop-slide {
+    width:100px;
+    min-height:137px;
+    max-height:137px;
+    padding:6px;
+    border-radius:var(--input-border-r);
+    border:1px solid var(--mid-gray, #D2D2D2);
+    background-color:var(--white);
+    overflow:hidden;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+.shop-slide:hover {
+    border-color:var(--primary-green);
+	box-shadow:3px 12px 12px 0 rgba(0,0,0,0.2);
+    -webkit-box-shadow:3px 12px 12px 0 rgba(0,0,0,0.2);
+    z-index:10;
+}
+.shop-slide a:hover {
+    color:var(--primary-green);
+}
+.shop-slide .img-container {
+	height:60px;
+	min-width:unset;
+	min-height:unset;
+	overflow:hidden;
+	border-radius:var(--input-border-r);
+    margin-bottom:6px;
+}
+.shop-slide img {
+    display:inline-block;
+    width:var(--full, 100%);
+}
+.shop-slide .shop-slide-txt {
+    line-height:1;
+}
+.user-func-col2-containier {
+	width:var(--full);
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	gap:20px;
+}
+.user-func-col2-containier .main-card-col2 {
+	justify-content:center;
+	align-items:flex-start;
+	padding:unset;
+	padding-left:20%;
+}
+.shop-favorite-container {
+	position:fixed;
+	top:100px;
+	right:20px;
+	width:146px;
+	height:660px;
+	overflow:hidden;
+	border-radius:var(--border-r-10);
+	background-color:rgba(130,138,141,0.6);
+	outline:1px solid var(--gray);
+	z-index:10;
+}
+.shop-favorite-container > div {
+	margin:20px 0;
+	position:relative;
+	background-color:tansparent;
+}
+#favorite_product_json {
+	position:absolute;
+	width:122px;
+	height:574px;
+	top:46px;
+	left:20px;
+	overflow-y:scroll;
+}
+#favorite_product_json::scrollbar {
+    width:7px;
+}
+#favorite_product_json::-webkit-scrollbar {
+    width:7px;
+}
+#favorite_product_json::scrollbar-thumb {
+    background-color:var(--white);
+}
+#favorite_product_json::-webkit-scrollbar-thumb {
+    background-color:var(--white);
+}
+#favorite_product_json::scrollbar-track {
+    background-color:#dce3df;
+}
+#favorite_product_json::-webkit-scrollbar-track {
+    background-color:#dce3df;;
+}
+#favorite_product_json::scrollbar-track-piece {
+    background-color:transparent;
+}
+#favorite_product_json::-webkit-scrollbar-track-piece {
+    background-color:transparent;
+}
+.shop-favorite-container .shop-slide {
+	width:95px;
+	min-height:120px;
+	max-height:120px;
+	margin-bottom:10px;
+	background-color:rgba(255,255,255,0.4);
+}
+.shop-favorite-container .shop-slide:hover {
+	background-color:var(--white);
+	box-shadow:none;
+	-webkit-box-shadow:none;
+}
+.shop-favorite-container .shop-slide .shop-slide-txt {
+	color:var(--dark-gray);
+}
+.shop-favorite-container .shop-slide:hover .shop-slide-txt {
+	color:var(--black)!important;
+}
+.shop-favorite-container .shop-slide .img-container {
+	height:40px;
+}
+
+
+/*  AI 추천 & 내 식물 공통 */
+.myplant-list-container .card.full-card,
+.aiplant-list-container .card.full-card {
+	width:calc(100% - 26px);
+	padding:26px;
+}
+.myplant-list-container .img-container,
+.aiplant-list-container .img-container {
+	padding:2px;
+	align-items:flex-start;
+	margin-bottom:6px;
+	height:240px;
+}
+.myplant-feature-img,
+.aiplant-feature-img {
+	width:400px;
+	height:300px;
+	margin-bottom:20px;
+	max-height:unset;
+	background-color:var(--light-gray);
+	outline:1px solid var(--mid-gray);
+}
+
+
+/* AI 식물 추천 */
+.content-container.aiplant .search-bar {
+	height:56px;
+	border-radius:30px;
+	padding:10px 16px;
+	font-size:18px;
+	border-width:3px;
+}
+.content-container.aiplant .ic-search {
+	width:40px;
+	height:40px;
+	top:7px;
+}
+.aiplant-result-section .img-container {
+	min-width:460px;
+	min-height:300px;
+	background-color:var(--mid-gray);
+	margin-bottom:4.5em;
+}
+.alplant-result-container {
+	width:640px;
+	display:flex;
+	flex-direction:column;
+	justify-content:space-between;
+	align-items:center;
+}
+.alplant-result-container .aiplant-info {
+	width:var(--full);
+	font-size:16px;
+}
+.aiplant-list-container .img-container {
+	min-width:400px;
+}
+
+
+/* 내 식물 등록 */
+.myplant-list-container .card.type-2 {
+	height:256px;
+}
+
+
+/* 샵 : 프로덕트  상세 페이지 */
+.shop-product-wrapper {
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+}
+.product-sidemenu {
+	width:180px;
+	box-sizing:border-box;
+}
+.product-sidemenu a {
+	display:block;
+	padding:8px 10px;
+	border-radius:var(--border-r-10);
+	font-size:15px;
+}
+.product-sidemenu-li:hover,
+.product-sidemenu-li.active {
+	background-color:var(--white);
+	font-weight:500;
+	outline:1px solid var(--primary-green);
+	border-radius:var(--border-r-10);
+}
+.product-sidemenu-li:hover a,
+.product-sidemenu-li.active a {
+	color:var(--primary-green);
+}
+.product-content {
+	max-width:unset;
+	width:74%;
+	justify-content:space-between;
+}
+.product-info-section {
+	max-width:unset;
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	padding:30px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-shadow:var(--card-shadow);
+    -webkit-box-shadow:var(--card-shadow);
+    outline:1px solid var(--primary-green);
+    border-radius:var(--border-r-10);
+    background-color:var(--white);
+}
+.product-info-section .btn-container {
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	column-gap:6px;
+}
+.product-info-section .btn {
+	flex:1;
+	border-radius:var(--input-border-r);
+}
+.product-info-section .img-container {
+	min-width:290px;
+	min-height:220px;
+}
+.product-info-section .info-content {
+	width:54%;
+}
+
+
+/* === 커뮤니티/가드너스 다이어리 === */
+.content-container.community .card p.post-content {
+	max-height:3em;
+}
+.content-container.community .top-title {
+	background:url('../img/post/gardner-bg.png') no-repeat center center;
+	background-size:cover;
+}
+.content-container.community .card.type-2 {
+	height:380px;
+}
+.post-content textarea {
+	font-size:16px;
+	padding:14px 16px;
+	outline:1px solid var(--primary-green);
+	background-color:var(--pale-green);
+}
+.post-img-slider {
+	max-width:var(--site-width);
+	position:relative;
+}
+.post-img-slider .btn-prev,
+.post-img-slider .btn-next {
+	position:absolute;
+	top:calc(50% + 8px);
+}
+
+.post-img-slider .img-container {
+	max-width:260px;
+	min-height:260px;
+	padding:0;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:var(--light-gray);
+}
+.post-slider-section .water-circle {
+	display:inline-block;
+	width:16px;
+	height:16px;
+	border-radius:16px;
+	background-color:var(--primary-green);
+}
+.post-reply-section .full-card {
+	box-shadow:var(--card-shadow);
+	cursor:default;
+	gap:unset;
+}
+.post-reply-section .full-card:hover {
+	outline-color:var(--mid-gray);
+	box-shadow:var(--card-shadow);
+}
+.post-reply-section .post-reply-content {
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: normal;
+    line-height: 1.6;
+    height: 3em;
+    font-size:14px;
+}
+.post-reply-section input {
+	background-color:unset;
+	padding:unset;
+}
+.post-reply-userId {
+   outline:none;
+   border:none;
+}
+.post-hit-icon {
+   vertical-align:middle;
+}
+.like-button.liked {
+    color:var(--error-red);
+}
+.popup.write-post-popup .img-upload-container {
+	padding:0 20px;
+}
+.popup.write-post-popup .upload-container .title-container {
+	flex-basis:unset;
+}
+.popup.write-post-popup .img-preview-container {
+	display:flex;
+	flex-direction:row;
+	column-gap:10px;
+	flex-wrap:wrap;
+	min-height:unset;
+	margin-bottom:20px;
+}
+.popup.write-post-popup .img-wrapper {
+	position:relative;
+	display:inline-block;
+	width:90px;
+	height:90px;
+	overflow:hidden;
+	background-color:var(--mid-gray);
+	border-radius:var(--border-r-10);
+}
+.popup.write-post-popup .img-container img {
+	display:block;
+	width:var(--full);
+}
+.popup.write-post-popup .btn.upload-img {
+	padding:4px;
+	max-width:100px;
+	font-size:12px;
+}
+.write-reply-container {
+	/* padding:20px 24px; */
+	border-radius:var(--border-r-10);
+	background-color:var(--bg-gray);
+}
+.write-reply-container textarea {
+	width:calc(100% - 13px);
+}
+.post-reply-section {
+	padding:10px;
+}
+.replyList .card.full-card {
+	padding:8px 12px;
+	margin:0;
+}
+.replyList .card.full-card:hover {
+	box-shadow:unset;
+	-webkit-box-shadow:unset;
+	border-width:1px;
+}
+.replyList .btn-container {
+	margin-top:10px;
+}
+.replyList .reply-textarea {
+	width:calc(100% - 11px);
+}
+
+
+
+/* === 쇼핑/프로덕트 페이지 === */
+/* 쇼핑 : 요즘 뜨는 샵 */
+.shop-home-swiper {
+	background-color:var(--white);
+}
+.shop-home-swiper .swiper-slide > a {
+	background-color:#F1F0EE;
+}
+.shop-home-swiper .swiper-slide:nth-child(2) > a {
+	background-color:#D6D7DA;
+}
+.shop-home-swiper .swiper-slide img {
+	max-width:var(--site-width);
+	display:block;
+	width:var(--full);
+	margin:0 auto;
+}
+.local-slider {
+	justify-content:center;
+	align-items:flex-start;
+	padding:unset;
+	padding-left:20%;
+}
+.local-plant-section .keywords-container {
+	max-width:260px;
+	min-height:360px;
+    height:fit-content;
+    padding:20px;
+    /* margin:12px; */
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-shadow:var(--card-shadow);
+    -webkit-box-shadow:var(--card-shadow);
+    outline:1px solid var(--mid-gray);
+    border-radius:var(--border-r-10);
+}
+.local-plant-section .flex-container.col-2 > div:first-child {
+	flex:1;
+	padding:0;
+}
+.local-plant-section .shop-slide {
+	width:120px;
+	min-height:160px;
+}
+.local-plant-section .shop-slide .img-container {
+	height:80px;
+}
+
+.shop-post-swiper .swiper-wrapper {
+	padding-bottom:30px;
+}
+.shop-post-swiper .swiper-slide {
+	height:335px;
+}
+.shop-post-swiper .swiper-scrollbar {
+	left:calc(50% - 520px);
+}
+.shop-tab-section .tab-nav {
+	max-width:660px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.shop-tab-section .tab-nav .tab-nav-item {
+	font-size:15px;
+	margin:3px 4px 3px;
+	height:50px;
+}
+.shop-tab-section .tab-nav .tab-nav-item span {
+	min-width:86px;
+	padding: 12px;
+}
+.shop-tab-section .tab-container {
+	min-height:unset;
+}
+
+
+
+/* === 로그인 === *
+
+
+/* === 회원가입 === */
+.regist-form .tel {
+	width:21.5%;
+}
+
+/* === 관리자페이지 === */
+.menu-active {
+    background-color:var(--mid-gray);   
+}
+.depth1-title {
+    font-weight:500;
+}
+.depth1-title.active {
+    font-weight:500;
+    background-color:#EEE;
+}
+.manage-table-container {
+    display:flex;
+    flex-direction:row;
+    width:var(--full, 100%);
+    background-color:#F4F4F4;
+}
+.user-info-container {
+    margin:20px 16px;
+    padding:0;
+    border-bottom:1px solid var(--mid-gray, #D2D2D2);
+}
+.user-info-container a {
+    display:flex;
+    padding:0;
+    margin:0;
+}
+.user-info-container a:hover {
+    background-color:unset;
+}
+.user-info-container span {
+    padding:0;
+    margin:0 0 12px;
+}
+.table-container.table-keyword {
+    width:var(--full, 100%);
+    max-width:unset;
+}
+.upload-container.manage-post-upload {
+	min-width:200px;
+}
+
+.upload-container .btn-upload-img {
+	bottom:0;
+}
+
+
+/* === 서비스 === */
+/* 회원가입 */
+.join-form .tel input {
+	width:21.5%;
+}
+.join-form .email input {
+	width:150px;
+}
+
+/* AI 이미지 추천받기 */
+.ai-title-img-container img {
+	display:block;
+	width:var(--full);
+}
+.tag-container.mykeyword .tag {
+	padding:6px 12px;
+	font-size:16px;
+	border-radius:20px;
+	min-width:60px;
+	height:fit-content;
+}
+.tag-container.mykeyword {
+	min-height:100px;
+	background-color:var(--white);
+	border-radius:var(--border-r-10);
+	padding:16px;
+}
+.tag-container.mykeyword .tag-txt  {
+	display:inline-block;
+	width:calc(100% - 22px);
+	line-height:18px;
+}
+
+.tag.type-ai {
+    outline:1px solid var(--mid-gray);
+    background-color:var(--white);
+    border-radius:30px;
+    margin-right:10px;
+    margin-bottom:10px;
+    color:var(--gray, #808080);
+    font-size:16px;
+    min-width:60px;
+    text-align:center;
+    padding:0;
+}
+.tag.type-ai.selected .tag-txt {
+    outline-color:var(--primary-green);
+    color:var(--primary-green);
+    font-size:16px;
+    display:block;
+    padding:6px 12px;
+}
+.tag.type-ai .tag-close {
+    width:18px;
+    height:18px;
+    border-radius:18px;
+    cursor:pointer;
+}
+.tag-container.ai-tags {
+    max-width:unset;
+}
+
+/* 내 식물 */
+.myplant-upload-wrapper {
+	background:url('../img/bg.png') no-repeat center center;
+	background-size:cover;
+}
+.myplant-upload-wrapper .img-container {
+	min-height:260px;
+}
+.myplant-upload-wrapper .txt-container {
+	width:61%;
+}
+.myplant-form-container {
+    width:var(--full, 100%);
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+.myplant-list-container .popup-container .img-container {
+	height:200px;
+}
+.myplant-list-container .popup-container .txt-container {
+	width:58%;
+}
+.myplant-list-container .popup-container .txt-container label {
+	flex-direction:column;
+}
+.myplant-form-container textarea {
+    width:calc(100% - 12px);
+}
+
+/* 내 식물 리스트 */
+.myplant-txt-container {
+	width:54%;
+}
+.plant-feature {
+    background:var(--light-gray);
+    border-radius:var(--input-border-r);
+}
+.general-info {
+	display:none;
+}
+.general-info.active {
+	display:block;
+}
+
+/* === Media Queries === */
+@media screen and (max-width:840px) {
+    /* === 메인페이지 === */
+    /* GameRoom & Myplant */
+    .content-container.main {
+        padding:90px 0;
+    }
+    .main-top-section {
+    	flex-direction:column;
+        padding:10px;
+        min-height:840px;
+    }
+    .main-user-info {
+        position:unset;
+        height:110px;
+    }
+    .main-game-room, .main-myplant-room {
+        padding:16px;
+        top:18px;
+        left:0;
+        /* height:fit-content; */
+    }
+    .main-game-room.active, .main-myplant-room.active {
+        top:0;
+    }
+    .main-game-room > p {
+        position:absolute;
+        top:30px;
+        left:30px;
+    }
+    .game-room {
+        flex-direction:column;
+        flex-wrap:nowrap;
+    }
+    .character-container {
+        width:var(--full, 100%) ;
+        padding:10px;
+        margin-right:0;
+        margin-bottom:10px;
+        min-height:340px;
+    }
+    .my-character {
+        height:var(--full, 100%);
+        position:relative;
+    }
+    .my-character-img {
+        line-height:200px;
+        border-radius:100px;
+        text-align:center;
+        color:var(--gray);
+        position:absolute;
+        top:var(--half);
+        left:var(--half);
+        transform:translate(-50%, -50%);
+    }
+    .progress-bar-container {
+        position:relative;
+        width:var(--full, 100%);
+    }
+    .progress-bar-container .prev-level {
+        position:absolute;
+        top:-6px;
+        left:0;
+    }
+    .progress-bar-container .next-level {
+        position:absolute;
+        top:-6px;
+        right:3px;
+    }
+    .progress-bar-wrapper {
+        width:var(--full, 100%);
+        height:20px;
+        position:relative;
+        background-color:var(--white);
+        border-radius:20px;
+        overflow:hidden;
+        margin-top:20px;
+    }
+    .progress-bar {
+        height:var(--full, 100%);
+        position:absolute;
+        top:0;
+        left:0;
+    }
+    .game-list-container {
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+        width:var(--full, 100%);
+        padding:10px;
+    }
+    .game-list-container > div {
+        width:48%;
+    }
+    .game-todo-list > li {
+        font-size:12px;
+        padding:6px 10px;
+        background-color:var(--pale-green);
+        border-radius:var(--input-border-r);
+        margin-bottom:4px;
+    }
+    .game-todo-list .ic-check {
+        display:inline-block;
+        vertical-align:middle;
+        margin-right:6px;
+        width:18px;
+        height:18px;
+        border-radius:9px;
+        background-color:var(--white);
+        position:relative;
+    }
+    .game-todo-list .ic-check::before {
+        content:"";
+        display:block;
+        position:absolute;
+        top:5px;
+        left:4px;
+        width:8px;
+        height:4px;
+        border-left:2px solid var(--mid-gray, #D2D2D2);
+        border-bottom:2px solid var(--mid-gray, #D2D2D2);
+        transform:rotate(-45deg);
+    }
+    .game-todo-list li.done {
+        color:var(--primary-green);
+    }
+    .game-todo-list li.done .ic-check::before {
+        color:var(--primary-green);
+        border-color:var(--primary-green);
+    }
+    .character-name {
+        height:60px;
+        border-radius:var(--border-r-10);
+        background-color:var(--primary-green);
+        color:var(--white);
+        font-size:14px;
+    }
+    .main-myplant-list-container {
+        min-height:320px;
+        max-height:489px;
+    }
+    .myplant-li {
+    	justify-content:center;
+        padding:10px;
+    }
+    .myplant-li .main-myplant-card {
+    	width:var(--full);
+    	height:unset;
+        margin:0 0 12px 0;
+	    min-width:unset;
+    }
+    .myplant-li .img-container {
+        width:60px;
+        height:60px;
+        border-radius:30px;
+        margin-right:30px;
+    }
+    .main-myplant-notice {
+        position:absolute;
+        left:30px;
+        bottom:30px;
+        width:calc(100% - 60px);
+    }
+    .main-top-btn-container {
+        top:30px;
+        left:unset;
+        right:10px;
+        bottom:unset;
+        z-index:10;
+    }
+
+    /* Main : 나를 위한 추천 글 */
+    
+
+    /* Main : 맞춤기능 */
+    .user-func-col2-containier .main-card-col2::before {
+		display:none;
+	}
+    .shop-slide-wrapper {
+    	min-height:unset;
+        margin-bottom:10px;
+    }
+    .shop-slide {
+        width:78px;
+        border-radius:var(--input-border-r);
+    }
+    .shop-slide a:hover {
+        color:var(--primary-green);
+    }
+    .shop-slide img {
+        display:inline-block;
+        width:var(--full, 100%);
+        height:60px;
+        border-radius:var(--input-border-r);
+        margin-bottom:4px;
+    }
+    .shop-slide .shop-slide-txt {
+        line-height:1;
+    }
+    .user-func-col2-containier .main-card-col2 {
+		align-items:center;
+		padding:16px;
+		text-align:center;
+	}
+    
+    /* Main : 맞춤 기능 */
+    
+    /* 쇼핑 : 포스트 스와이퍼 */
+    .swiper-slide {
+    	width:var(--full)!important;
+    }
+    .shop-post-swiper .swiper-slide {
+    	min-width:240px;
+    }
+    .shop-post-swiper .swiper-scrollbar {
+    	left:1%;
+    }
+    
+    /* 회원가입 */
+    .frm-join .input-container input {
+        width:var(--full, 100%);
+    }
+   
+    /* 내 식물 등록하기 */
+    .myplant-upload-container {
+        display:flex;
+        flex-direction:column;
+        row-gap:10px;
+    }
+    .myplant-img-container {
+        display:flex; 
+        column-gap:14px;
+        max-width:unset;
+        min-height:unset!important;
+    }
+    .myplant-feature-img {
+        width:var(--full, 100%);
+        height:168px;
+        line-height:1;
+    }
+    
+	/* 내 식물 리스트 */
+	.myplant-feature-img {
+		width:var(--full, 100%);
+		margin-left:unset;
+		margin-bottom:0;
+	}
+	.myplant-txt-container {
+		width:var(--full, 100%);
+	}
+	
+	
+ }

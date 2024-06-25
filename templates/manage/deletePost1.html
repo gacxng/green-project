@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko"
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{layout/defaultManageLayout}">
+   <head>
+      <title>관리자 | 게시물 관리</title>
+   </head>
+   <div layout:fragment="manage_sidemenu"></div>
+   <div layout:fragment="content" class="w-100">
+      <div class="side-content-container">
+         <div class="table-title-container">
+               <h1 class="table-title breadscrumb txt-gray">
+                  <a th:href="@{/manage/board.do}"><span class="txt-gray">게시판 / 게시물 관리</span></a>
+               <span class="ic-arrow txt-valign-top"></span>
+               <a th:href="@{/manage/deletePost1.do}"><span class="txt-white">알쓸식잡</span></a>
+            </h1>
+           </div>
+           <div class="side-content">
+              <div class="table-aside-container">
+                 <div>
+                    <button class="btn tbl-type-1" type="button" onclick="delListPosts()">선택 게시물 삭제</button>
+                        <input type="button" class="btn tbl-type-1 btn-writePopup" value="기사 등록" onclick="getArticleForm()">
+                 </div>
+                 <div>
+                         <form name="searchP1" action="/searchP1.do" method="get">
+                           <input name="keyword" type="text" id="searchKeyword" placeholder="게시물검색">
+                       <input type="submit" value="게시물 검색" class="btn tbl-type-1 tbl-submit ">
+                          </form>
+                    </div>
+              </div>
+                 <div class="table-container">
+                   <table class="table-post" id="taskList">
+                       <tr>
+                           <th><input type="checkbox" data-select-all2 onclick="toggleSelectAllPosts(this)"></th> <!-- 전체 선택 -->
+                          <th>게시물 번호</th>
+                           <th>제목</th>
+                           <th class="min-w-160">작성자</th>
+                           <th>작성일</th>
+                           <th>조회수</th>
+                       </tr>
+                       <tr th:each="dto : ${list}">
+                           <td><input type="checkbox" class="post-checkbox"></td>
+                           <td th:text="${dto.post_no}">게시물 번호</td>
+                           <td th:text="${dto.title}">제목</td>
+                           <td th:text="${dto.user_id}">작성자</td>
+                           <td th:text="${#temporals.format(dto.regist_date, 'yyyy-MM-dd HH:mm:ss')}">작성일</td>
+                           <td th:text="${dto.hit}">조회수</td>
+                       </tr>  
+                        <tr th:if="${noResults}">
+                            <td colspan="6" id="noResultsMessage">검색 결과가 없습니다.</td>
+                        </tr>
+                   </table>
+                <div class="popup-container">
+                      <div class="popup">
+                          <span class="popup-close">close</span>
+                          <div class="popup-content-container">
+                              <h2 class="h2">알쓸식잡 등록</h2>
+                              <form action="https://www.google.com/search" method="GET" target="_blank">
+                               <div>
+                                  <label>
+                                     <span class="label-txt">포스트 검색하기</span>
+                                     <input type="text" name="query" placeholder="검색어를 입력하세요." value="">
+                                     <button type="submit" class="btn tbl-type-1">검색</button>
+                                  </label>
+                               </div>
+                              </form>
+                               <form name="writeArticle" action="writeArticle.do" method="post" enctype="multipart/form-data">
+                                  <div class="form-inner">
+                                     <div>
+                                        <input type="hidden" name="post_no" id="post_no" readonly>
+                                        <input type="hidden" name="board_no" value="1" readonly>
+                                     </div>
+                                     <div>
+                                        <label>
+                                           <input type="hidden" name="user_id" id="user_id" readonly>
+                                       </label>
+                                     </div>
+                                     <div class="input-container">
+                                        <label>
+                                           <span class="label-txt">글 제목</span>
+                                           <input type="text" name="title">
+                                       </label>
+                                     </div>
+                                     <div class="input-container">
+                                        <label>
+                                           <span class="label-txt">글 내용</span>
+                                        <textarea onkeyup="resize(this)" onkeydown="resize(this)" rows="3" name="p_content" placeholder="내용을 입력하세요." class="w-100"></textarea>
+                                       </label>
+                                     </div>
+                                     <div class="input-container">
+                                        <label>
+                                           <span class="label-txt">태그</span>
+                                           <input type="tag" name="keyword" placeholder="#꽃송이">
+                                       </label>
+                                     </div>
+                                     <div class="input-container mb-20">
+                                        <label>
+                                           <span class="label-txt">기사 링크</span>
+                                           <input type="text" name="location" placeholder="https://">
+                                       </label>
+                                     </div>
+                                     <div class="img-upload-container">
+										<div class="upload-container manage-post-upload">
+											<div class="img-container">
+												<img class="preview" src="/img/no-img.png" alt="업로드 이미지" />
+											</div>
+											<label class="btn upload-img mb-20">
+												<input type="file" accept="/img/post/*" name="post_img" onchange="readURL3(this);" id="fileInput" multiple>
+												<i class="material-icons">&#xe412;</i><span>파일 선택</span>
+											</label>
+										</div>
+									</div>
+                                     <div class="btn-container txt-right">
+                                        <input type="button" class="btn btn-reset" onclick=" resetArticleForm()" value="다시쓰기"> 
+                                        <input type="button" class="btn btn-submit" onclick="saveArticle()" value="저장">
+                                     </div>
+                                     
+                                     
+                                     
+                                     <!-- <div class="post-upload-container">
+                                       <div class="post-img-container">
+                                          <img class="preview" src="/img/no-img.png" alt="업로드 이미지" />
+                                       </div>
+                                       <label class="btn upload-img-post">
+                                          <input type="file" accept="/img/post/*" name="post_img" onchange="readURL3(this);" id="fileInput" multiple>
+                                          input multiple name이 겹쳐도 이미지 여러개 받을 수 있다. 컨트롤러에 list형으로 받아줘야 함.
+                                          <i class="material-icons">&#xe412;</i><span>파일 선택</span>
+                                       </label>
+                                    </div> -->
+                                 </div>
+                           </form>
+                         </div>
+                      </div>
+                  </div>
+                </div>
+             </div>
+      </div>
+   </div>
+</html>

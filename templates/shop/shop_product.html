@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+	<title>샵 : 프로덕트 페이지</title>
+    <div layout:fragment="content" class="content-container bg-green">
+	    <div class="shop-product-wrapper layout-pd-L site-width">
+	    	<div class="product-sidemenu-container">
+	    		<div class="link-contianer">
+	        		<a th:href="@{/shop}" class="link txt-green font-size-14 no-icon">샵 메인으로 돌아가기</a>
+	        	</div>
+	        	<div class="separator layout-pd-S"></div>
+	        	<div class="product-sidemenu-container">
+	        		<p class="txt-bold mb-20">카테고리</p>
+	        		<ul class="product-sidemenu">
+		    			<li th:classappend="${categoryDto.category_no} == ${categoryNo} ? 'active' : ''" th:each="categoryDto : ${ categoryList }" class="product-sidemenu-li mb-6">
+		    				<a href="javascript:;" th:text="${categoryDto.category_name}" th:onclick="getCategorizedProduct([[${categoryDto.category_no}]], [[${product.product_no}]])"></a>
+		    			</li>
+		    		</ul>
+	        	</div>
+	    	</div>
+	    	<div class="product-content">
+		    	<section class="product-info-section">
+			    	<div class="img-container">
+		    			<img th:if="product.img_path == null" src="/img/no-img.png" alt />
+		    			<img th:src="${product.img_path}" th:alt="${product.product_name}" />
+		    		</div>
+		    		<div class="info-content">
+		    			<ul class="product-info-ul txt-left">
+			    			<li><span class="tag">키워드1</span><span class="tag">키워드2</span></li>
+			    			<li class="mb-8 font-size-14" th:text="${product.category}">상품 카테고리</li>
+			    			<li class="mb-20"><h2 class="font-size-24 txt-bold" th:text="${product.product_name}"></h2></li>
+			    			<li class="mb-8 font-size-14"><span class="dis-inlineBlock mr-6 txt-gray txt-bold">판매처</span><span th:text="${product.manufacturer}" class="txt-green"></span></li>
+			    			<li class="mb-8 font-size-14"><span class="dis-inlineBlock mr-6 txt-gray txt-bold">영업시간</span><span></span></li>
+			    			<li><span class="product-desc"></span></li>
+			    		</ul>
+				    	<div class="btn-container">
+				    		<a th:href="${product.url}" class="btn btn-submit" target="_blank">구매하러 가기</a>
+				    		<button 
+							    th:id="'btn-p-' + ${product.product_no}" 
+							    type="button" 
+							    class="btn btn-favorite" 
+							    th:classappend="${favorite == 1} ? 'btn btn-favorite active' : 'btn btn-favorite'" 
+							    th:onclick="addProductFavorite([[${product.product_no}]]);">
+							    <span th:text="${favorite == 1} ? '찜 해제' : '찜 하기'"></span>
+							</button>
+				    	</div>
+		    		</div>
+		    	</section>
+		    	<div class="separator layout-pd-L pb-0"></div>
+		    	<section id="product_category_json" class="product-list-section layout-pd-L">
+		    		<div class="title-container mb-30">
+		    			<p class="h3" th:text="${ categoryName }"></p>
+		    		</div>
+		    		<div class="localshop-slider">
+						<div class="shop-slide-wrapper">
+	                     	<div th:each="productDto : ${ productList }" class="shop-slide">
+						       <a th:href="@{'/shop/shop_product/' + ${productDto.product_no}}" class="dis-block w-100">
+						       		<div class="img-container">
+						       			<img th:src="${productDto.img_path}" th:alt="${productDto.product_name}" />
+						       		</div>
+						       		<div class="shop-slide-txt over-hidden">
+						       			<span class="font-size-10 txt-overflow" th:text="${productDto.manufacturer}"></span>
+						       			<p class="font-size-13 txt-bold txt-overflow mb-6" th:text="${productDto.product_name}"></p>
+						       		</div>
+						       	</a>
+						    </div>
+					    </div>
+					</div>
+		    	</section>
+		    	<section class="shop-favorite-container pos-relative">
+		        	<div>
+			        	<p class="font-size-17 txt-bold mb-20 txt-center"><span>찜한 식물 &#x1F44D;</span></p>
+				        <div id="favorite_product_json">
+				        	<div th:if="${favoriteProductList != null or !favoriteProductList.isEmpty()}" th:each="favorite : ${ favoriteProductList }" class="shop-slide">
+						       <a th:href="@{'/shop/shop_product/' + ${favorite.product_no}}" class="dis-block w-100">
+									<div class="img-container">
+				                   	<img th:src="${favorite.img_path}" th:alt="${favorite.product_name}" />
+				                   </div>
+				                    <div class="shop-slide-txt over-hidden">
+				                        <span class="font-size-10 txt-overflow" th:text="${favorite.manufacturer}"></span>
+				                        <p class="font-size-12 txt-medium txt-overflow mb-6" th:text="${favorite.product_name}"></p>
+				                    </div>
+				                </a>
+						    </div>
+						    <div th:if="${favoriteProductList == null or favoriteProductList.isEmpty()}" class="mb-60">
+								<p class="txt-green font-size-12">찜한 식물이<br>없어요 &#x1F605;</p>
+					        </div>
+				        </div>
+			        </div>
+		        </section>
+	    	</div>
+	    </div>
+    </div>
+</html>

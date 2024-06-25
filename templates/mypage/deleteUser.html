@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>유저 | 회원탈퇴</title>
+	</head>
+	<div layout:fragment="manageSideContent" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title">회원탈퇴</h1>
+	        </div>
+	        <div class="side-content">
+				<div class="table-container">
+					<form class="form-deleteUser" id="exitService" action="/mypage/delUser.do" method="post">
+						<table class="table-post">
+							<p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+							<tr>
+								<td class="user_id">아이디</td>
+								<td class="content"><input type="text" class="user_id" name="user_id" ></td>
+							</tr>
+							<tr>
+								<td class="password">비밀번호</td>
+								<td class="content"><input type="password" class="password" name="password"></td>
+							</tr>
+							<tr>
+								<td colspan="2" class="editInfo_btn">
+									<input type="button" class="btn btn_cancelEditInfo" id="cancelDelete" value="취소" onclick="cancel_del()">
+									<input type="button" class="btn btn_updateInfo" id="deleteUser" value="회원탈퇴" onclick="del_user()">
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+             </div>
+		</div>
+	</div>
+</html>

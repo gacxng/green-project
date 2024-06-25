@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+	<head>
+		<script th:inline="javascript" type="text/javascript" th:src="@{/js/myplant.js}"></script>
+	</head>
+	<div layout:fragment="content" class="content-container index">
+		<section class="site-width layout-pd-L">
+		<div class="title-container index-title txt-center">
+			<h1 class="h1">나에게 어울리는 식물은?</h1>
+			<div class="index-img-container flex-between-container max-w-640 layout-pb-L">
+				<img id="char-1" src="./img/game_character/idx-seed-1.png">
+				<img id="char-2" src="./img/game_character/idx-seed-2.png">
+				<img id="char-3" src="./img/game_character/idx-seed-3.png">
+				<img id="char-4" src="./img/game_character/idx-seed-4.png">
+				<img id="char-5" src="./img/game_character/idx-seed-5.png">
+			</div>
+		</div>
+        <div class="txt-center">
+        	<p class="font-size-18">
+	        	<span class="txt-break">평범한 공간도 식물이 있으면 특별해 집니다.</span>
+				<span class="txt-break">나의 일상에 초록을 더해보세요.</span>
+				<span class="txt-break">하지만 어떤 식물이 나에게 어울리는지 모르겠다구요?</span>
+				<span class="txt-break"><span class="txt-green">초록초록</span>이 알려드릴게요!</span>
+			</p>
+        </div>
+        <div class="btn-container txt-center max-w-300 layout-pd-S" sec:authorize="isAnonymous()">
+            <button type="button" class="btn btn_regist btn-submit w-100 mb-20" th:onclick="@{|window.location='@{/login/regist.do}'|}">초록초록 지금 시작해보기</button>
+            <button type="button" class="btn btn_login w-100" th:onclick="@{|window.location='@{/login/login.do}'|}">이미 회원이신가요? <span class="txt-green">로그인 하기</span></button>
+        </div>
+        <div class="btn-container txt-center max-w-300 layout-pd-S" sec:authorize="isAuthenticated()">
+            <button type="button" class="btn btn_login w-100" th:onclick="@{|window.location='@{/main}'|}">메인으로 돌아가기</button>
+        </div>
+    </section>
+	</div>
+</html>

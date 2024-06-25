@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+<div layout:fragment="content" class="content-container community">
+	<div class="content-inner">
+		<div class="title-container bg-green top-title">
+			<div class="title-inner-container site-width layout-pd-L">
+				<h1 class="h1 txt-white">초록초록 커뮤니티</h1>
+				<p class="sub-title txt-white">식물을 사랑하는 모두가 함께하는, 즐거운 나눔이 시작됩니다.</p>
+			</div>
+		</div>
+		<section class="site-width layout-pd-L">
+			<div class="tab-container">
+				<div class="tab-nav-inner">
+					<ul class="tab-nav">
+						<li th:class="${pb_status}? 'tab-nav-item active' : 'tab-nav-item'" id="tab-1">
+							<a th:href="@{/community/article}">
+								<span th:if="${board_name1 == null}">알쓸식잡</span>
+								<span th:unless="${board_name1 == null}" th:text="${board_name1}"></span>
+							</a>
+						</li>
+						<li th:class="${gd_status}? 'tab-nav-item active' : 'tab-nav-item'" id="tab-2">
+							<a th:href="@{/community/gardenerDiary}">
+								<span th:if="${board_name2 == null}">가드너 다이어리</span>
+								<span th:unless="${board_name2 == null}" th:text="${board_name2}"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-contents pos-relative">
+					<div th:class="${pb_status}? 'tab-content active' : 'tab-content'"
+						data-tab="tab-1">
+						<div class="tab-inner">
+							<!-- 알쓸식잡 검색 -->
+							<div class="tab-filter-container flex-container">
+								<form name="search1" action="/search1.do" method="get">
+									<div class="search-container">
+										<label> <!-- 알쓸식잡 검색 --> <span class="label-txt"></span>
+											<input name="keyword" type="text"> <input
+											type="hidden" name="search1" value="article">
+											<button type="submit">
+												<i class="material-icons">&#xe8b6;</i>
+											</button>
+										</label>
+									</div>
+								</form>
+							</div>
+							<div th:if=${noResult}>
+								<p id="noResultMessage">검색결과가 없습니다.</p>
+							</div>
+							<div class="card type-1" th:each="dto : ${postTotList}">
+								<a th:href="${dto.location}" target="_black"> <!-- 카드 누르면 url 연결 -->
+									<div class="card-img">
+										<img th:if="${dto.img_id == 0 || dto.img_id == null}"
+											src="/img/no-img.png" />
+										<img
+											th:unless="${dto.img_id == 0 || dto.img_id == null}"
+											th:src="${'/imgFile/'+ dto.img_id}" />
+									</div>
+									<div>
+										<span class="tag">알쓸식잡</span>
+										<h2 class="card-title" th:text="${dto.title}"></h2>
+										<p class="post-content" th:text="${dto.p_content}"></p>
+									</div>
+									<div>
+										<span class="keyword" th:text="${dto.keyword}"></span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div th:class="${gd_status}? 'tab-content active' : 'tab-content'"
+						data-tab="tab-2">
+						<div class="tab-inner">
+							<div class="tab-filter-container">
+								<!-- 가드너스 다이어리 검색 -->
+								<div class="flex-container">
+									<form name="search2" action="/search2.do" method="get">
+										<div class="search-container">
+											<label> <!-- 다이어리 검색 --> <span class="label-txt"></span>
+												<input name="keyword" type="text"> <input
+												type="hidden" name="search2" value="gardenerDiary">
+												<button type="submit">
+													<i class="material-icons">&#xe8b6;</i>
+												</button>
+											</label>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div th:if=${noResult}>
+								<p id="noResultMessage">검색결과가 없습니다.</p>
+							</div>
+							<div class="card type-2" th:each="dto : ${postTotList}">
+								<!-- 상세페이지 들어가기 -->
+								<a th:href="@{('/community/postView/'+${dto.post_no})}">
+									<div class="post-img mb-20">
+										<div class="card-img">
+											<img th:if="${dto.img_id == 0 || dto.img_id == null}"
+												src="/img/no-img.png" /> <img
+												th:unless="${dto.img_id == 0 || dto.img_id == null}"
+												th:src="${'/imgFile/'+ dto.img_id}" />
+										</div>
+									</div>
+									<div>
+										<span class="tag">가드너 다이어리</span>
+									</div>
+									<div class="user">
+										<span class="user-id" th:text="${dto.user_nickname}"></span>
+									</div>
+									<h2 class="font-size-16 txt-bold mb-6" th:text="${dto.title}"></h2>
+									<p class="post-content" th:text="${dto.p_content}"></p> <span
+									class="keyword mb-6 dis-inlineBlock" th:text="${dto.keyword}"></span>
+									<div class="flex-container">
+										<div class="like-and-reply">
+											<span class="like-icon"><i class="material-icons">&#xe87d;</i></span>
+											<span class="like" th:text="${dto.like_cnt}"></span>
+										</div>
+										<div class="hit-cnt">
+											<span class="hit-icon"><i class="material-icons">&#xe8f4;</i></span>
+											<span class="hit" th:text="${dto.hit}"></span>
+										</div>
+										<div>
+											<p class="regist_date"
+												th:text="${#temporals.format(dto.regist_date, 'yyyy-MM-dd')}"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="link-container">
+							<input type="button" class="btn btn-writePopup" value="다이어리 쓰기"
+								onclick="getPostForm()">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="popup-container">
+				<div class="popup write-post-popup">
+					<span class="popup-close">close</span>
+					<div class="popup-content-container">
+						<h2 class="h2">다이어리 쓰기</h2>
+						<form name="writePost" action="write.do" method="post"
+							enctype="multipart/form-data">
+							<div class="form-inner">
+								<div>
+									<!-- 게시판 번호, 게시글 번호 가져오기 -->
+									<input type="hidden" name="post_no" id="post_no" readonly>
+									<input type="hidden" name="board_no" value="2" readonly>
+								</div>
+								<div class="input-container">
+									<input type="hidden" name="user_id" id="user_id" readonly>
+									</label>
+								</div>
+								<div class="input-container">
+									<label> <span class="label-txt">글 제목</span> <input
+										type="text" name="title">
+									</label>
+								</div>
+								<div class="input-container mb-10">
+									<label> <span class="label-txt">글 내용</span> <textarea
+											onkeyup="resize(this)" onkeydown="resize(this)" rows="3"
+											name="p_content" placeholder="내용을 입력하세요." class="w-100"></textarea>
+									</label>
+								</div>
+								<div class="input-container">
+									<label> <span class="label-txt">태그</span> <input
+										type="text" name="keyword" placeholder="태그할 키워드를 입력해주세요.">
+									</label>
+								</div>
+								<div class="separator mb-20"></div>
+								<div class="img-upload-container">
+									<div class="upload-container w-100">
+										<div class="img-container">
+											<div class="title-container mb-4">
+												<p class="font-size-17 txt-bold mr-6">사진 등록</p>
+												<p class="font-size-12 txt-gray">사진 등록은 5장까지 가능합니다.</p>
+											</div>
+											<label class="btn upload-img mb-20"> <input
+												class="img-upload-input" type="file" accept="/img/post/*"
+												name="post_img" onchange="readURL2(this);" id="fileInput"
+												multiple> <i class="material-icons mr-4">&#xe412;</i><span>파일
+													선택</span>
+											</label>
+											<div class="img-preview-container">
+												<span class="img-wrapper"> <img class="preview"
+													src="/img/no-img.png" alt="업로드 이미지" /> <span
+													class="btn-close"></span>
+												</span> <span class="img-wrapper"> <img class="preview"
+													src="/img/no-img.png" alt="업로드 이미지" /> <span
+													class="btn-close"></span>
+												</span> <span class="img-wrapper"> <img class="preview"
+													src="/img/no-img.png" alt="업로드 이미지" /> <span
+													class="btn-close"></span>
+												</span> <span class="img-wrapper"> <img class="preview"
+													src="/img/no-img.png" alt="업로드 이미지" /> <span
+													class="btn-close"></span>
+												</span> <span class="img-wrapper"> <img class="preview"
+													src="/img/no-img.png" alt="업로드 이미지" /> <span
+													class="btn-close"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="separator mb-10"></div>
+								<div class="btn-container txt-right">
+									<input type="button" class="btn btn-round btn-reset"
+										id="diaryReset" value="다시쓰기"> <input type="button"
+										class="btn btn-round btn-submit" id="diarySave" value="저장">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+	<div layout:fragment="content" class="content-container main">
+		<section class="main-top-section site-width layout-pd-L">
+            <div class="main-user-info">
+                <div>
+                    <p class="font-size-24 txt-bold mb-10">
+                    	<span class="txt-green" th:text="${user_nickname != null ? user_nickname + '' : ''}"></span>
+                    	<span th:utext="${user_nickname != null ? ' 님.<br>반갑습니다!&#128522;' : '어서오세요!<br>환영합니다!&#128522;'}"></span>
+                    </p>
+                    <a th:href="@{/mypage/editUserInfo.do}" class="txt-gray font-size-14 txt-valign-middle"><i class="material-icons mr-4">&#xe8b8;</i>내 정보 관리</a>
+                </div>
+                <div class="main-top-btn-container">
+                    <button class="main-top-btn btn-game active mr-6" type="button" onclick="mainTopTab(this);">내 씨앗</button>
+                    <button class="main-top-btn btn-myplant" type="button" onclick="mainTopTab(this);">내 식물</button>
+                </div>
+            </div>
+            <div class="main-game-and-myplant pos-relative">
+                <div class="main-game-room active">
+                    <div class="game-room">
+                    <!-- <p class="font-size-12">내 씨앗과 함께한지 <span class="txt-green mr-4" th:text="${daysSinceRegistration}"></span>일째</p> -->
+                        <div class="character-container">
+                            <div class="my-character">
+                            	<input type="hidden" id="characterId" th:value="${#authentication.principal.username}">   
+                     			<input type="hidden" id="characterLevel" th:value="${g_level}">                              
+                                <div class="my-character-img">
+                                    <img id="characterImage">
+                                </div>
+                            </div>
+                            <div class="exp-bar-container progress-bar-container">
+                            	<input type="hidden" id="characterId" th:value="${#authentication.principal.username}">   
+                              	<input type="hidden" id="characterLevel" th:value="${g_level}"> 
+                                <span class="prev-level txt-gray font-size-12" th:text="${'NOW ' + g_level}"></span>
+                                <div class="progress-bar-wrapper">
+                                    <span id="bar" class="progress-bar" th:style="'width: ' + ${progressValue} + '%;'">progress-bar</span>
+                                </div>
+                                <input type="hidden" id="characterId" th:value="${#authentication.principal.username}">   
+                                <input type="hidden" id="characterLevel" th:value="${g_level}">                              
+                                <span class="next-level txt-green font-size-12" th:text="${'NEXT ' + (g_level + 1)}" th:unless="${g_level == 5}"></span>
+                            </div>
+                        </div>
+                        <div class="game-list-container">
+                            <div class="main-userinfo">
+                                <p class="user-nickname mb-10 txt-center font-size-15">
+                                <input type="hidden" id="characterId" th:value="${#authentication.principal.username}">   
+                              	<input type="hidden" id="characterLevel" th:value="${g_level}"> 
+	                                <span class="level-cnt txt-gray mr-4" th:text="${'LEVEL ' + (g_level)}"></span>
+	                                <span class="txt-bold">호박</span>
+                                </p>
+                                <p class="character-name txt-green pos-relative mb-30 txt-center">
+                                    <span class="valign-middle-item font-size-18 txt-bold dis-inlineBlock w-100" th:text="${userCharacterNick}"></span>
+                                </p>
+                            </div>
+                            <div class="game-todo-list-container">
+                                <p class="txt-bold font-size-14 mb-10">To do List</p>
+                                <input type="hidden" id="gameId" th:value="${#authentication.principal.username}">   
+                       			 <input type="hidden" id="gameLevel" th:value="${g_level}">
+                                <form id="button-container" method="post">
+	                        		<div class="form-inner">
+		                        		<div class="game-hidden-buttens">
+		                        			<input type="hidden" id="water_id" th:value="${#authentication.principal.username}">
+		                     				<input type="hidden" id="water_level" th:value="${game.g_level}">
+		                     				<input type="hidden" id="love_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="love_level" th:value="${game.g_level}">
+	                              			<input type="hidden" id="sun_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="sun_level" th:value="${game.g_level}">
+	                              			<input type="hidden" id="poo_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="poo_level" th:value="${game.g_level}">
+	                              			<input type="hidden" id="bug_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="bug_level" th:value="${game.g_level}">
+	                              			<input type="hidden" id="pot_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="pot_level" th:value="${game.g_level}">
+	                              			<input type="hidden" id="music_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="music_level" th:value="${game.g_level}">
+	                              			<input type="hidden" id="nutrition_id" th:value="${#authentication.principal.username}">
+	                              			<input type="hidden" id="nutrition_level" th:value="${game.g_level}">
+		                        		</div>
+		                        		<div class="game-task-buttons">
+		                        			<button type="button" id="water-button" formaction="waterPlant" class="btn-game-todo">
+		                        				<span class="task-title">물주기</span>
+		                        				<span class="task-txt" id="water-time" th:text=${waterTime}></span>
+		        								<span class="task-txt" id="water-count" th:text= "${waterCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="love-button" formaction="lovePlant" class="btn-game-todo">
+		                        				<span class="task-title">사랑주기</span>
+		                        				<span class="task-txt" id="love-time" th:text="${loveTime}"></span>
+		           								<span class="task-txt" id="love-count" th:text="${loveCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="sun-button" formaction="sunPlant" class="btn-game-todo">
+		                        				<span class="task-title">햇빛주기</span>
+		                        				<span class="task-txt" id="sun-time" th:text="${sunTime}"></span>
+		            							<span class="task-txt" id="sun-count" th:text="${sunCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="poo-button" formaction="pooPlant" class="btn-game-todo">
+		                        				<span class="task-title">비료주기</span>
+		                        				<span class="task-txt" id="poo-time" th:text="${pooTime}"></span>
+		        								<span class="task-txt" id="poo-count" th:text="${pooCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="bug-button" formaction="bugPlant"  class="btn-game-todo">
+		                        				<span class="task-title">벌레잡기</span>
+		                        				<span class="task-txt" id="bug-time" th:text="${bugTime}"></span>
+		        								<span class="task-txt" id="bug-count" th:text="${bugCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="pot-button" formaction="potPlant"  class="btn-game-todo">
+		                        				<span class="task-title">화분갈이</span>
+		                        				<span class="task-txt" id="pot-time" th:text="${potTime}"></span>
+		        								<span class="task-txt" id="pot-count" th:text="${potCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="music-button" formaction="musicPlant"  class="btn-game-todo">
+		                        				<span class="task-title">음악들려주기</span>
+		                        				<span class="task-txt" id="music-time" th:text="${musicTime}"></span>
+		        								<span class="task-txt" id="music-count" th:text="${musicCount}"></span>
+		                        			</button>
+		                        			<button type="button" id="nutrition-button" formaction="nutritionPlant" class="btn-game-todo">
+		                        				<span class="task-title">영양제 주기</span>
+		                        				<span class="task-txt" id="nutrition-time" th:text="${nutritionTime}"></span>
+		        								<span class="task-txt" id="nutrition-count" th:text="${nutritionCount}"></span>
+		                        			</button>
+		                        		</div>
+	                        		</div>
+	                        	</form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-myplant-room">
+                    <div class="title-container flex-between-container flex-valign-center mb-20">
+                        <h1 class="h3 mb-0">My Favorite Plants</h1>
+                        <div class="flex-container flex-valign-center">
+                        	<a th:href="@{/aiplant/aiplant_list.do}" class="link-read-more no-icon dis-inlineBlock font-size-14 txt-green">AI 추천식물 관리</a>
+                        	<span class="bar"></span>
+                        	<a th:href="@{/myplant/myplant_list}" class="link-read-more no-icon dis-inlineBlock font-size-14">내식물 관리</a>
+                        </div>
+                    </div>
+                    <div class="main-myplant-list-container">
+					    <div class="main-myplant-list-inner">
+					        <ul th:if="${!favoriteMyplantList.isEmpty()}" class="main-myplant-list">
+					            <li th:each="myplantDto : ${favoriteMyplantList}" class="myplant-li">
+					                <!-- <a th:href="@{'/myplant/myplant_list#myplant_' + ${myplantDto.plant_no}}" target="_blank" class="card main-myplant-card"> -->
+					                <a href="javascript:;" class="card main-myplant-card" th:onclick="scrollToMyplant([[ ${myplantDto.plant_no} ]]);">
+					                    <div class="img-container">
+					                    	<img th:if="${myplantDto.img_id == 0 || myplantDto.img_id == null}" src="/img/no-img.png" th:alt="${myplantDto.org_img_name}" />
+					            			<img th:unless="${myplantDto.img_id == 0 || myplantDto.img_id == null}" th:src="${'/download/'+ myplantDto.img_id}" th:alt="${myplantDto.org_img_name}" />
+					                    </div>
+					                    <div>
+					                        <p class="font-size-18 txt-bold" th:text="${myplantDto.plant_nickname}"></p>
+					                        <p class="font-size-12 flex-container mb-6">
+					                        	<span class="txt-green mr-6">마지막으로 물준 날</span>
+					                        	<span th:text="${myplantDto.last_water}"></span>
+					                        </p>
+					                        <p class="font-size-12 mb-0">
+					                        	<span class="txt-overflow" th:text="${myplantDto.user_memo}"></span>
+					                        </p>
+					                    </div>
+					                </a>
+					            </li>
+					        </ul>
+					        <div th:unless="${!favoriteMyplantList.isEmpty()}" class="txt-center">
+					        	<p class="txt-green font-size-14">즐겨찾기된 식물이 없습니다... &#x1F605;</p>
+					        </div>
+					    </div>
+				    </div>
+                    <div class="main-myplant-notice">
+                        <p class="txt-bold font-size-13 txt-gray mb-10">Comment</p>
+                        <!-- <p class="font-size-16 txt-bold"><span class="txt-green">${애칭}</span>가 좋아하는 맑은 날이에요! 저를 창가에 놓아주세요.</p> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="swiper-section layout-pd-L">
+            <div class="title-container">
+                <h2 class="h2 site-width mb-30">추천 글 읽어보기</h2>
+            </div>
+            <div id="main-post-swiper" class="main-post-swiper swiper">
+				<div class="swiper-wrapper">
+					<a th:each="postDto : ${ postList }" th:href="@{${postDto.location}}" class="main-card swiper-slide" target="_blank">
+						<div>
+							<span class="tag mb-6" th:text="${postDto.board_no == 1 ? '알쓸식잡' : '가드닝 다이어리'}"></span>
+						    <h2 class="font-size-18 txt-bold" th:text="${postDto.title}"></h2>
+						</div>
+					</a>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+			<div>
+			</div>
+        </section>
+        <section class="user-func-section layout-pd-L">
+            <div class="title-container">
+                <h2 class="h2 site-width mb-30"><span class="txt-green" th:text="${user_nickname}"></span>님을 위한 맞춤 기능</h2>
+            </div>
+            <div class="user-func-col2-containier site-width">
+                <a th:href="@{/aiplant/aiplant.do}" class="card main-card-col2 aiplant">
+                    <p class="font-size-14">키우고는 싶은데 잘 모르겠다면...?</p>
+                    <h3 class="h3 txt-bold mb-0">내 식물 추천 받기</h3>
+                </a>
+                <a th:href="@{/myplant}" class="card main-card-col2 myplant">
+                    <p class="font-size-14">나는야 프로 식집사!</p>
+                    <h3 class="h3 txt-bold mb-0">내 식물 등록하기</h3>
+                </a>
+            </div>
+        </section>
+        <section class="shop-section layout-pd-L bg-green">
+        	<div class="site-width">
+        		<div class="title-container">
+	                <h2 class="h2">요즘 사람들은 뭘 사지?</h2>
+	            </div>
+	            <div class="flex-container col-2">
+	            	<div class="hot-products">
+	       				<div class="flex-between-container flex-valign-center mb-30">
+                           <h3 class="font-size-17 mb-0 txt-bold">요즘 뜨는 식물</h3>
+                           <a th:href="@{/shop}" class="link-read-more font-size-14">샵 홈으로 바로가기</a>
+	       				</div>
+                       <div id="main_product_json">
+                       		<div class="page shop-slide-wrapper">
+                       			<div th:each="productDto : ${ productList }" class="shop-slide">
+							       <a th:href="@{'/shop/shop_product/' + ${productDto.product_no}}" class="dis-block w-100" target="_blank">
+										<div class="img-container">
+		                                 	<img th:src="${productDto.img_path}" th:alt="${productDto.product_name}" />
+		                                 </div>
+	                                    <div class="shop-slide-txt over-hidden">
+	                                        <span class="font-size-10 txt-overflow" th:text="${productDto.manufacturer}"></span>
+	                                        <p class="font-size-13 txt-bold txt-overflow mb-6" th:text="${productDto.product_name}"></p>
+	                                    </div>
+	                                </a>
+							    </div>
+						    </div>
+						    <div class="page-container">
+			                	<div class="page">
+									<button type="button" th:if="${page.existPrevPage}" class="btn-prev active" th:onclick="'getMainProductAjax(' + (${page.page - 1}) + ')'"></button>
+									<div class="flex-container ml-6 mr-6">
+										<div class="font-size-13"><span class="txt-green">요즘 뜨는 식물 샵</span>&nbsp;더보기&nbsp;</div>
+										<div class="font-size-12 mr-10 ml-10">
+											<span class="txt-green" th:text="${ page.page }"></span><span class="txt-gray"> / 2 &nbsp;</span>
+										</div>
+                              		</div>
+                              		<button type="button" class="btn-next active" th:onclick="'getMainProductAjax(' + (${page.page + 1}) + ')'"></button>
+	                             </div>
+							</div>
+	                    </div>
+	            	</div>
+	            	<div class="hot-products">
+	       				<div class="flex-between-container flex-valign-center mb-30">
+                           <h3 class="font-size-17 mb-0 txt-bold">우리 동네 추천 샵</h3>
+                           <a th:href="@{/shop/shop_map.do}" class="link-read-more font-size-14">추천 샵 찾아보기</a>
+	       				</div>
+                       <div id="main_shop_json">
+                       		<div class="page shop-slide-wrapper">
+		                  		<div th:each="shopDto : ${ shopListWithPage }" class="shop-slide">
+				       				<a th:href="${shopDto.place_url}" class="dis-block w-100" target="_blank">
+		                                <div class="shop-slide-txt over-hidden">
+		                                	<p th:text="${shopDto.place_name} ? ${shopDto.place_name} : ''" class="font-size-13 txt-bold mb-4"></p>
+		                                	<p th:text="${shopDto.address_name} ? ${shopDto.address_name} : ''" class="font-size-10 mb-4">
+		                                	</p>
+		                                	<p>
+		                                		<i class="material-icons mr-4" style="font-size:12px;">&#xe32c;</i>
+		                                		<span th:text="${shopDto.phone} ? ${shopDto.phone} : ''" class="font-size-10 dis-inline"></span>
+		                                	</p>
+		                                </div>
+		                            </a>
+							    </div>
+						    </div>
+						    <div th:if="${shopListWithPage.isEmpty()}" class="txt-center">
+					        	<p class="txt-green font-size-14">표시할 샵이 없습니다...&#x1F625;</p>
+					        </div>
+				   			<div class="page-container">
+			                	<div class="page">
+									<button type="button" th:if="${page.existPrevPage}" class="btn-prev active" th:onclick="'getMainShopAjax(' + (${page.page - 1}) + ')'"></button>
+									<div class="flex-container ml-6 mr-6">
+										<div class="font-size-13"><span class="txt-green">우리 동네 샵</span>&nbsp;더보기&nbsp;</div>
+										<div class="font-size-12 mr-10 ml-10">
+											<span class="txt-green" th:text="${ page.page }"></span><span class="txt-gray"> / 5 &nbsp;</span>
+										</div>
+		                            </div>
+		                            <button type="button" class="btn-next active" th:onclick="'getMainShopAjax(' + (${page.page + 1}) + ')'"></button>
+		                        </div>
+							</div>
+	                    </div>
+	            	</div>
+				</div>
+			</div>
+        </section>
+	</div>
+</html>

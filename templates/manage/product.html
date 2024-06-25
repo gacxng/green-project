@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultManageLayout}">
+	<head>
+		<title>관리자 | 상품 관리</title>
+	</head>
+	<div layout:fragment="manage_sidemenu"></div>
+	<div layout:fragment="content" class="w-100">
+		<div class="side-content-container">
+			<div class="table-title-container">
+	            <h1 class="table-title">상품 관리</h1>
+	        </div>
+	        <div class="side-content">
+	        	<div class="table-aside-container">
+		        	<div>
+		        		<a class="btn tbl-type-1" type="button" onclick="delList()">체크 상품 삭제</a>
+		        		<a href="javascript:;" class="btn tbl-type-1 btn-add-product btn-adminPopup2" th:onclick="openPopup22();">상품 추가</a>
+	        		</div>
+	        		<div class="search-container ic-20">
+		        		<form name="searchProduct" action="/searchProduct.do" method="get">
+		        			<input name="keyword" type="text" id="searchKeyword" placeholder="상품검색">
+		        			<input type="submit" value="검색" class="btn tbl-type-1">
+                        </form>
+                    </div>
+	        	</div>
+		        <div class="table-container">
+	                <table class="table-product w-100">
+                        <tr>
+                            <th><input type="checkbox" onclick="toggleSelectAll2(this)" id="data-select-all"></th>
+                            <th>상품코드</th>
+                            <th class="txt-center min-w-160">상품이름</th>
+                            <th class="txt-center min-w-160">판매처</th>
+                            <th>기능관리</th>
+                        </tr>
+                        <tr th:each="dto : ${list}">
+                            <td><input type="checkbox" class="product-checkbox"></td>
+                            <td th:text="${dto.product_no}">0001</td>
+                            <td th:text="${dto.product_name}">해바라기</td>
+                            <td th:text="${dto.manufacturer}">가연화원</td>
+                            <td >
+                                <a href="javascript:;" class="link-edit-product btn tbl-type-2 btn-adminPopup" th:onclick="openPopup2();">상품 수정</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${noResults}">
+                            <td colspan="5" id="noResultsMessage">검색 결과가 없습니다.</td>
+                        </tr>
+                    </table>
+                    
+                    
+                    <div class="popup-container" th:each="dto : ${list}">
+		                <div class="popup">
+		                    <span class="popup-close">close</span>
+		                    <div class="popup-content-container">
+	                        <h2 class="font-size-18 txt-bold mb-20">상품 수정하기</h2>
+                         	<form name="form_product_update" action="updateProduct.do" class="form-type-2" method="post" enctype="multipart/form-data">
+	                        	<div class="flex-between-container">
+	                        			<div class="img-container">
+						                 	<img class="img-thumb-200" th:src="@{${dto.img_path}}"/>
+						                </div>
+		                            <div class="txt-container form-container">
+	                                	<div class="input-container">
+	                                		<label>
+					                            <span class="label-txt mb-6">상품 이름</span>
+					                            <input name="product_name" type="text" th:value="${dto.product_name}">
+					                        	<input type="hidden" name="product_no" th:value="${dto.product_no}">
+					                        </label>
+					                    </div>
+	                                    <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">url</span>
+					                            <input name="url" type="text" th:value="${dto.url}">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">카테고리 번호</span>
+					                            <input name="category_no" type="text" th:value="${dto.category_no}">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">판매처</span>
+					                            <input name="manufacturer" type="text" th:value="${dto.manufacturer}">
+					                        </label>
+					                     </div>
+					                     <div class="input-container">
+							                <label>
+					                            <span class="label-txt mb-6">상품 이미지</span>
+					                            <input name="img_path" type="text" th:value="${dto.img_path}">
+					                        </label>
+					                     </div>
+	                                     <div class="btn-container txt-right">
+	                                        <button class="btn btn-submit" type="button" onclick="updateProduct(this);">수정하기</button>
+	                                     </div>
+		                             </div>
+		                    	 </div>
+                            </form>
+		                    </div>
+		                 </div>
+	            	</div>
+	            	
+	            	
+	            	<!-- 상품 추가 -->
+                   <div class="popup-container2">
+                      <div class="popup">
+                          <span class="popup-close">close</span>
+                          <div class="popup-content-container">
+                           <h2 class="font-size-18 txt-bold mb-20">상품 추가하기</h2>
+								<form id="form_input_product" name="form_input_product" action="/inputProduct.do" method="post" enctype="multipart/form-data" class="form-type-2">
+								    <div class="flex-between-container">
+								        <div class="txt-container form-container">
+								            <div>
+								                <input type="hidden" name="product_no" id="product_no" readonly>
+								            </div>
+								            <div class="input-container">
+								                <label>
+								                    <span class="label-txt mb-6">상품 이름</span>
+								                    <input name="product_name" type="text" placeholder="예) 장미">
+								                </label>
+								            </div>
+								            <div class="input-container">
+								                <label>
+								                    <span class="label-txt mb-6">판매처 링크 주소</span>
+								                    <input name="url" type="text" placeholder="http:// 또는 https://로 시작">
+								                </label>
+								            </div>
+								            <div class="input-container">
+								                <label>
+								                    <span class="label-txt mb-6">카테고리 번호</span>
+								                    <input name="category_no" type="text" placeholder="1~10">
+								                </label>
+								            </div>
+								            <div class="input-container">
+								                <label>
+								                    <span class="label-txt mb-6">판매처</span>
+								                    <input name="manufacturer" type="text" placeholder="예) **가든">
+								                </label>
+								            </div>
+								            <div class="input-container">
+								                <label>
+								                    <span class="label-txt mb-6">상품 이미지 주소</span>
+								                    <input name="img_path" type="text" placeholder="http:// 또는 https://로 시작">
+								                </label>
+								            </div>
+								            <div class="btn-container txt-right">
+								                <button class="btn btn-submit" type="button" onclick="confirmProduct();">추가하기</button>
+								            </div>
+								        </div>
+								    </div>
+								</form>
+                          </div>
+                       </div>
+                  </div>
+	            	
+
+	            </div>
+             </div>
+		</div>
+	</div>
+</html>
