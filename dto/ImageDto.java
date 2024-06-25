@@ -1,0 +1,19 @@
+package com.greenfinal.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class ImageDto {
+	private int img_no;
+	private String img_location;
+	private String img_name;
+	private int post_no;
+}
